@@ -2,10 +2,13 @@
 
 With this SDK you will be able to start transactions and retrieve transactions with their status for the Pay.nl payment service provider.
 
+This SDK provides support for both the [PAY 2.0 (stable)](https://developer.pay.nl/v2.0/docs/introduction), and the [PAY 3.0 (beta)](https://developer.pay.nl/v3.0/docs/introduction), with each their own client class, `PayV2Client` and `PayV3Client`.
+
 ---
 
 - [Installation](#installation)
 - [Quick start and examples](#usage)
+- [Supported platforms](#supported-platforms)
 - [Implemented features](#implemented-features)
 - [License](#license)
 
@@ -19,7 +22,7 @@ PM> Install-Package PayNL.Sdk -Version x.x.x
 
 Creating a client, you can find your API key and tokens in the [Pay.nl Admin Panel](https://my.pay.nl/company/tokens), and the service id (SL-xxxx-xxx) secret in the [Pay.nl Services Overview](https://my.pay.nl/programs/programs#field_content) under 'Sales locations':
 ```c#
-var client = new PayClient("apiSecret", "AT-xxxx-xxxx", "ST-xxxx-xxxx");
+var client = new PayV2Client("apiSecret", "AT-xxxx-xxxx", "ST-xxxx-xxxx");
 ```
 
 Getting a list of available payment methods:
@@ -48,7 +51,23 @@ To determine if a transaction has been paid, you can use:
 var trxStatus = await client.GetTransactionInfo(transactionResponse.Id);
 var paid = trxStatus.AmountPaid.Value == trxStatus.Amount.Value;
 ```
-### Implemented features
+
+### Supported platforms
+This library is built using .NET standard 2.1. This means that the package supports the following .NET implementations:
+| Framework                   | Version Support |
+|-----------------------------|-----------------|
+| .NET and .NET Core          | 3.0, 3.1, 5.0, 6.0, 7.0, 8.0 |
+| .NET Framework 1            | N/A             |
+| Mono                        | 6.4             |
+| Xamarin.iOS                 | 12.16           |
+| Xamarin.Mac                 | 5.16            |
+| Xamarin.Android             | 10.0            |
+| Universal Windows Platform  | N/A             |
+| Unity                       | 2021.2          |
+
+Source: https://docs.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-2-1
+
+### Implemented features API V2
 
 - Transactions
     - [x] Create
@@ -90,6 +109,19 @@ var paid = trxStatus.AmountPaid.Value == trxStatus.Amount.Value;
     - [x] Create
     - [x] (Un)suspend
 - [x] Create vouchers
+- [ ] Remainder of the documented API
+
+### Implemented features API V3
+- [x] Orders
+    - [x] Create
+    - [x] View
+    - [x] Capture order
+    - [x] Capture amount
+    - [x] Capture products
+    - [x] Void
+    - [x] Abort
+    - [x] Approve
+    - [x] Decline
 - [ ] Remainder of the documented API
 
 ### License

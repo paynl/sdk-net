@@ -1,6 +1,6 @@
 using System.Net;
 using System.Text.Json;
-using PayNlSdk.Sdk.DataTransferModels;
+using PayNlSdk.Sdk.V2.DataTransferModels;
 
 namespace PayNlSdk.Sdk.Utilities;
 

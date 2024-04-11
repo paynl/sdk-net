@@ -1,7 +1,7 @@
 using PayNlSdk.IntegrationTests.Helpers;
-using PayNlSdk.Sdk.Client;
-using PayNlSdk.Sdk.DataTransferModels.Transaction;
 using PayNlSdk.Sdk.Utilities;
+using PayNlSdk.Sdk.V2.Client;
+using PayNlSdk.Sdk.V2.DataTransferModels.Transaction;
 
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 
@@ -12,10 +12,10 @@ public class MultiCoreRequestsTests
     [Fact]
     public async Task UninitializedClientThrows()
     {
-        MultiCorePayClient.IsInitialized = false;
+        MultiCorePayV2Client.IsInitialized = false;
         await Assert.ThrowsAsync<MutliCoreUninitializedException>(async () =>
         {
-            var client = new MultiCorePayClient("", "", "");
+            var client = new MultiCorePayV2Client("", "", "");
             await client.GetTransactionMultiCore("foo");
         });
     }
@@ -26,8 +26,8 @@ public class MultiCoreRequestsTests
         var httpClient = new HttpClient(new CustomHttpClientHandler());
         var client = TestHelper.CreatMultiCoreClient(httpClient);
         CustomHttpClientHandler.BlockedDomains.Add("api.pay.nl");
-        Assert.Equal(3, MultiCorePayClient.AvailableCores.Count());
-        Assert.Equal(2, MultiCorePayClient.AvailableCores.Count(c => c.IsHealthy));
+        Assert.Equal(3, MultiCorePayV2Client.AvailableCores.Count());
+        Assert.Equal(2, MultiCorePayV2Client.AvailableCores.Count(c => c.IsHealthy));
 
         var trx = await client.CreateTransactionMultiCore((new CreateTransactionRequest
         {
@@ -53,8 +53,8 @@ public class MultiCoreRequestsTests
         CustomHttpClientHandler.BlockedDomains.Add("pay.nl");
         CustomHttpClientHandler.BlockedDomains.Add("payments.nl");
 
-        Assert.Equal(3, MultiCorePayClient.AvailableCores.Count());
-        Assert.Equal(2, MultiCorePayClient.AvailableCores.Count(c => c.IsHealthy));
+        Assert.Equal(3, MultiCorePayV2Client.AvailableCores.Count());
+        Assert.Equal(2, MultiCorePayV2Client.AvailableCores.Count(c => c.IsHealthy));
         Assert.ThrowsAny<Exception>(() =>
         {
             _ = client.CreateTransactionMultiCore((new CreateTransactionRequest
@@ -78,8 +78,8 @@ public class MultiCoreRequestsTests
         var client = TestHelper.CreatMultiCoreClient(httpClient);
         CustomHttpClientHandler.BlockedDomains.Add("api.pay.nl");
 
-        Assert.Equal(3, MultiCorePayClient.AvailableCores.Count());
-        Assert.Equal(2, MultiCorePayClient.AvailableCores.Count(c => c.IsHealthy));
+        Assert.Equal(3, MultiCorePayV2Client.AvailableCores.Count());
+        Assert.Equal(2, MultiCorePayV2Client.AvailableCores.Count(c => c.IsHealthy));
         var trx = await client.CreateTransactionMultiCore((new CreateTransactionRequest
         {
             Amount = new Amount
@@ -102,8 +102,8 @@ public class MultiCoreRequestsTests
         var httpClient = new HttpClient(new CustomHttpClientHandler());
         var client = TestHelper.CreatMultiCoreClient(httpClient);
         Assert.Equal(0, client.ActiveEndpointIndex);
-        Assert.Equal(3, MultiCorePayClient.AvailableCores.Count());
-        Assert.Equal(2, MultiCorePayClient.AvailableCores.Count(c => c.IsHealthy));
+        Assert.Equal(3, MultiCorePayV2Client.AvailableCores.Count());
+        Assert.Equal(2, MultiCorePayV2Client.AvailableCores.Count(c => c.IsHealthy));
         var trx = await client.CreateTransactionMultiCore((new CreateTransactionRequest
         {
             Amount = new Amount
@@ -129,8 +129,8 @@ public class MultiCoreRequestsTests
 
         var client = TestHelper.CreatMultiCoreClient(httpClient);
         Assert.Equal(0, client.ActiveEndpointIndex);
-        Assert.Equal(3, MultiCorePayClient.AvailableCores.Count());
-        Assert.Equal(2, MultiCorePayClient.AvailableCores.Count(c => c.IsHealthy));
+        Assert.Equal(3, MultiCorePayV2Client.AvailableCores.Count());
+        Assert.Equal(2, MultiCorePayV2Client.AvailableCores.Count(c => c.IsHealthy));
         var trx = await client.CreateTransactionMultiCore((new CreateTransactionRequest
         {
             Amount = new Amount

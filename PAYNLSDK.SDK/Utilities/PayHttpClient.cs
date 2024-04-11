@@ -1,6 +1,7 @@
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using PayNlSdk.Sdk.V3.DataTransferObjects;
 
 namespace PayNlSdk.Sdk.Utilities;
 
@@ -8,13 +9,13 @@ internal class PayHttpClient
 {
     private readonly HttpClient _client;
     private readonly Action<PayRequestLog>? _onRequest;
-    
+
     public PayHttpClient(HttpClient client, Action<PayRequestLog>? onRequest)
     {
         _client = client;
         _onRequest = onRequest;
     }
-    
+
     internal async Task<T?> GetAsync<T>(string url)
     {
         var response = await GetAsyncNoExceptionHandling(url);
@@ -29,7 +30,7 @@ internal class PayHttpClient
         await CallCallback(response);
         return response;
     }
-    
+
     internal async Task<T?> PostAsync<T>(string url, object? body = null)
     {
         StringContent? content = null;
@@ -66,7 +67,7 @@ internal class PayHttpClient
         var result = await response.Content.ReadAsStreamAsync();
         return await Json.DeserializeAsync<T>(result);
     }
-    
+
     internal async Task<HttpResponseMessage> PatchAsync(string url, object? body = null)
     {
         StringContent? content = null;
@@ -81,15 +82,15 @@ internal class PayHttpClient
         await response.HandleException();
         return response;
     }
-    
+
     internal async Task DeleteAsync(string url)
     {
         var response = await _client.DeleteAsync(url);
         await CallCallback(response);
-        
+
         await response.HandleException();
     }
-    
+
     private async Task CallCallback(HttpResponseMessage message)
     {
         if (_onRequest == null)
