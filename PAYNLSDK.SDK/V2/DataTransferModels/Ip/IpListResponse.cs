@@ -7,6 +7,6 @@ public class IpListResponse
     [JsonPropertyName("total")]
     public int? Total { get; set; }
 
-    [JsonPropertyName("ipaddresses")]
+    [JsonPropertyName("ipAddresses")]
     public List<string>? IpAddresses { get; set; }
 }

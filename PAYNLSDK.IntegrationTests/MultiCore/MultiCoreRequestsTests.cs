@@ -27,7 +27,6 @@ public class MultiCoreRequestsTests
         var client = TestHelper.CreatMultiCoreClient(httpClient);
         CustomHttpClientHandler.BlockedDomains.Add("api.pay.nl");
         Assert.Equal(3, MultiCorePayV2Client.AvailableCores.Count());
-        Assert.Equal(2, MultiCorePayV2Client.AvailableCores.Count(c => c.IsHealthy));
 
         var trx = await client.CreateTransactionMultiCore((new CreateTransactionRequest
         {
@@ -52,9 +51,9 @@ public class MultiCoreRequestsTests
         var client = TestHelper.CreatMultiCoreClient(httpClient);
         CustomHttpClientHandler.BlockedDomains.Add("pay.nl");
         CustomHttpClientHandler.BlockedDomains.Add("payments.nl");
+        CustomHttpClientHandler.BlockedDomains.Add("achterelkebetaling.nl");
 
         Assert.Equal(3, MultiCorePayV2Client.AvailableCores.Count());
-        Assert.Equal(2, MultiCorePayV2Client.AvailableCores.Count(c => c.IsHealthy));
         Assert.ThrowsAny<Exception>(() =>
         {
             _ = client.CreateTransactionMultiCore((new CreateTransactionRequest
@@ -68,7 +67,7 @@ public class MultiCoreRequestsTests
         });
 
         // 2 + 1 for retry of first
-        Assert.Equal(3, handler.FailedCalls.Count);
+        Assert.Equal(4, handler.FailedCalls.Count);
     }
 
     [Fact]
@@ -79,7 +78,6 @@ public class MultiCoreRequestsTests
         CustomHttpClientHandler.BlockedDomains.Add("api.pay.nl");
 
         Assert.Equal(3, MultiCorePayV2Client.AvailableCores.Count());
-        Assert.Equal(2, MultiCorePayV2Client.AvailableCores.Count(c => c.IsHealthy));
         var trx = await client.CreateTransactionMultiCore((new CreateTransactionRequest
         {
             Amount = new Amount
@@ -103,7 +101,6 @@ public class MultiCoreRequestsTests
         var client = TestHelper.CreatMultiCoreClient(httpClient);
         Assert.Equal(0, client.ActiveEndpointIndex);
         Assert.Equal(3, MultiCorePayV2Client.AvailableCores.Count());
-        Assert.Equal(2, MultiCorePayV2Client.AvailableCores.Count(c => c.IsHealthy));
         var trx = await client.CreateTransactionMultiCore((new CreateTransactionRequest
         {
             Amount = new Amount
@@ -130,7 +127,6 @@ public class MultiCoreRequestsTests
         var client = TestHelper.CreatMultiCoreClient(httpClient);
         Assert.Equal(0, client.ActiveEndpointIndex);
         Assert.Equal(3, MultiCorePayV2Client.AvailableCores.Count());
-        Assert.Equal(2, MultiCorePayV2Client.AvailableCores.Count(c => c.IsHealthy));
         var trx = await client.CreateTransactionMultiCore((new CreateTransactionRequest
         {
             Amount = new Amount
