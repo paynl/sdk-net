@@ -18,7 +18,6 @@ internal static class ExceptionHandlingExtension
             case HttpStatusCode.Unauthorized when response.Content != null:
             case HttpStatusCode.NotFound when response.Content != null:
             case HttpStatusCode.MethodNotAllowed when response.Content != null:
-            case HttpStatusCode.UnprocessableEntity when response.Content != null:
             case HttpStatusCode.BadRequest when response.Content != null:
                 try
                 {
@@ -42,11 +41,6 @@ internal static class ExceptionHandlingExtension
             case HttpStatusCode.ServiceUnavailable:
             case HttpStatusCode.GatewayTimeout:
             case HttpStatusCode.HttpVersionNotSupported:
-            case HttpStatusCode.VariantAlsoNegotiates:
-            case HttpStatusCode.InsufficientStorage:
-            case HttpStatusCode.LoopDetected:
-            case HttpStatusCode.NotExtended:
-            case HttpStatusCode.NetworkAuthenticationRequired:
                 throw new PayNlSdkException("Something went wrong on our end, please try again");
             default:
                 throw new PayNlSdkException($"Unhandled status code {response.StatusCode}");

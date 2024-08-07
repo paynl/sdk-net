@@ -1,18 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+        <TargetFramework>netstandard2.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>11</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>PayNL.Sdk</PackageId>
-        <Version>3.0.0.0</Version>
+        <Version>3.1.0.0</Version>
         <Title>PayNL Sdk</Title>
         <Authors>Scenius</Authors>
         <Description>Pay.nl Sdk for .NET</Description>
         <Copyright>Copyright 2016-2024</Copyright>
         <PackageTags>pay.nl payments pay paynl</PackageTags>
-        <PackageReleaseNotes>Pay V3.0 Beta API implemntation</PackageReleaseNotes>
+        <PackageReleaseNotes>Changed to netstandard2.0</PackageReleaseNotes>
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="System.Text.Json" Version="8.0.1" />

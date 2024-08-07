@@ -76,7 +76,9 @@ internal class PayHttpClient
             content = new StringContent(Json.Serialize(body), Encoding.UTF8, "application/json");
         }
 
-        var response = await _client.PatchAsync(url, content);
+        var request = new HttpRequestMessage(new HttpMethod("PATCH"), url);
+        request.Content = content;
+        var response = await _client.SendAsync(request);
         await CallCallback(response);
 
         await response.HandleException();
