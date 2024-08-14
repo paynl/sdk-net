@@ -39,7 +39,8 @@ var transactionRequest = new CreateTransactionRequest()
             Value = 1000,
         },
     ReturnUrl = "https://demo.pay.nl/complete/",
-    Description = "Example transaction"
+    Description = "Example transaction",
+    Reference = "12345XXY0123"
 };
 
 // Contains ID
