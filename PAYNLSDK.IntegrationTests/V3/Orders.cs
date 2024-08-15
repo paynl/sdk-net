@@ -2,7 +2,7 @@ using PayNlSdk.IntegrationTests.Helpers;
 using PayNlSdk.Sdk.V2.DataTransferModels;
 using PayNlSdk.Sdk.V2.DataTransferModels.Transaction;
 using PayNlSdk.Sdk.V3.Client;
-using PayNlSdk.Sdk.V3.DataTransferObjects;
+using PayNlSdk.Sdk.V3.DataTransferObjects.Orders;
 using PayNlSdk.Sdk.V3.Requests;
 using PayNlSdk.Sdk.V3.Requests.Orders;
 

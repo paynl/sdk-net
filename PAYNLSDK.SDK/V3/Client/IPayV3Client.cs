@@ -1,4 +1,4 @@
-using PayNlSdk.Sdk.V3.DataTransferObjects;
+using PayNlSdk.Sdk.V3.DataTransferObjects.Orders;
 using PayNlSdk.Sdk.V3.Requests;
 using PayNlSdk.Sdk.V3.Requests.Orders;
 

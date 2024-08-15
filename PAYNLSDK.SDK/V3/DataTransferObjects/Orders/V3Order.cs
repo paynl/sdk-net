@@ -1,8 +1,7 @@
 using System.Text.Json.Serialization;
 using PayNlSdk.Sdk.V2.DataTransferModels.Transaction;
-using PayNlSdk.Sdk.V3.DataTransferObjects.Orders;
 
-namespace PayNlSdk.Sdk.V3.DataTransferObjects;
+namespace PayNlSdk.Sdk.V3.DataTransferObjects.Orders;
 
 public class V3Order
 {
