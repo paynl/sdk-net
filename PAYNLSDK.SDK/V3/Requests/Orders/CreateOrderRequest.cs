@@ -1,6 +1,7 @@
+using System.ComponentModel;
 using System.Text.Json.Serialization;
+using PayNlSdk.Sdk.Utilities;
 using PayNlSdk.Sdk.V2.DataTransferModels.Transaction;
-using PayNlSdk.Sdk.V3.DataTransferObjects;
 using PayNlSdk.Sdk.V3.DataTransferObjects.Orders;
 using PayNlSdk.Sdk.V3.Requests.Orders;
 
@@ -21,7 +22,7 @@ public class CreateOrderRequest
 	public V3Customer? Customer { get; set; }
 
 	[JsonPropertyName("order")]
-	public V3Order? Order { get; set; }
+	public V3OrderInput? Order { get; set; }
 
 	[JsonPropertyName("notification")]
 	public V3Notification? Notification { get; set; }

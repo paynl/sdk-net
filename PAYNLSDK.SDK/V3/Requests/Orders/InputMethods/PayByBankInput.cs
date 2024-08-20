@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace PayNlSdk.Sdk.V3.Requests.Orders.InputMethods;
 
-public class PayByBankInput
+public class PayByBankInput : V3InputMethod
 {
 	[JsonPropertyName("issuer")]
 	public string? Issuer { get; set; }

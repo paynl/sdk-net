@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace PayNlSdk.Sdk.V3.Requests.Orders.InputMethods;
 
-public class DirectDebitInput
+public class DirectDebitInput : V3InputMethod
 {
 	[JsonPropertyName("firstName")]
 	public string? FirstName { get; set; }

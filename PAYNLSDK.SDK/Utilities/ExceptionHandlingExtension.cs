@@ -13,12 +13,13 @@ internal static class ExceptionHandlingExtension
 		    return;
 	    }
 
-        switch (response.StatusCode)
+        switch ((int)response.StatusCode)
         {
-            case HttpStatusCode.Unauthorized when response.Content != null:
-            case HttpStatusCode.NotFound when response.Content != null:
-            case HttpStatusCode.MethodNotAllowed when response.Content != null:
-            case HttpStatusCode.BadRequest when response.Content != null:
+            case (int)HttpStatusCode.Unauthorized when response.Content != null:
+            case (int)HttpStatusCode.NotFound when response.Content != null:
+            case (int)HttpStatusCode.MethodNotAllowed when response.Content != null:
+            case (int)HttpStatusCode.BadRequest when response.Content != null:
+	        case 422 when response.Content != null:
                 try
                 {
                     var content = await response.Content.ReadAsStringAsync();
@@ -35,15 +36,15 @@ internal static class ExceptionHandlingExtension
                     var content = await response.Content.ReadAsStringAsync();
                     throw new PayNlSdkException($"Unknown error for {response.StatusCode}, Response body: {content}", ex1);
                 }
-            case HttpStatusCode.InternalServerError:
-            case HttpStatusCode.NotImplemented:
-            case HttpStatusCode.BadGateway:
-            case HttpStatusCode.ServiceUnavailable:
-            case HttpStatusCode.GatewayTimeout:
-            case HttpStatusCode.HttpVersionNotSupported:
+            case (int)HttpStatusCode.InternalServerError:
+            case (int)HttpStatusCode.NotImplemented:
+            case (int)HttpStatusCode.BadGateway:
+            case (int)HttpStatusCode.ServiceUnavailable:
+            case (int)HttpStatusCode.GatewayTimeout:
+            case (int)HttpStatusCode.HttpVersionNotSupported:
                 throw new PayNlSdkException("Something went wrong on our end, please try again");
             default:
-                throw new PayNlSdkException($"Unhandled status code {response.StatusCode}");
+                throw new PayNlSdkException($"Unhandled status code {response.StatusCode}, body: {(response.Content != null ? (await response.Content.ReadAsStringAsync()) : "No content provided" )}");
         }
     }
 }
