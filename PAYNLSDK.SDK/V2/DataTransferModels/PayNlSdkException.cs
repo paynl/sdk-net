@@ -30,7 +30,7 @@ public class PayNlSdkException : Exception
     /// </summary>
     /// <param name="error">Error object</param>
     public PayNlSdkException(ApiError? error)
-        : base(error?.Detail, null)
+        : base(error?.Detail ?? error?.Title, null)
     {
         foreach (var v in error?.Violations?.Where(v => v.PropertyPath != null) ?? new List<Violation>())
         {
