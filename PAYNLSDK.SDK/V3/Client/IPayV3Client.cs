@@ -1,5 +1,4 @@
 using PayNlSdk.Sdk.V3.DataTransferObjects;
-using PayNlSdk.Sdk.V3.DataTransferObjects.MerchantManagement.Tokenisation;
 using PayNlSdk.Sdk.V3.Requests;
 using PayNlSdk.Sdk.V3.Requests.Orders;
 

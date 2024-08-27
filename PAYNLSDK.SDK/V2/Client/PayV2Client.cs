@@ -1,5 +1,7 @@
 using System.Net;
 using PayNlSdk.Sdk.Utilities;
+using PayNlSdk.Sdk.V2.DataTransferModels.Authentication;
+using PayNlSdk.Sdk.V2.DataTransferModels.Authentication.AuthenticationTokens;
 using PayNlSdk.Sdk.V2.DataTransferModels.Currencies;
 using PayNlSdk.Sdk.V2.DataTransferModels.DirectDebit;
 using PayNlSdk.Sdk.V2.DataTransferModels.Documents;
@@ -14,7 +16,6 @@ using PayNlSdk.Sdk.V2.DataTransferModels.Terminals;
 using PayNlSdk.Sdk.V2.DataTransferModels.Trademarks;
 using PayNlSdk.Sdk.V2.DataTransferModels.Transaction;
 using PayNlSdk.Sdk.V2.DataTransferModels.Vouchers;
-using PayNlSdk.Sdk.V3.DataTransferObjects.MerchantManagement.Tokenisation;
 using Service = PayNlSdk.Sdk.V2.DataTransferModels.Merchants.Service;
 
 namespace PayNlSdk.Sdk.V2.Client;
@@ -120,7 +121,7 @@ public class PayV2Client : PayV2ClientBase, IPayV2Client
 
     public async Task<CreateTransactionResponse?> CreateTransaction(CreateTransactionRequest body, Core? core = null)
     {
-        core ??= PayV2Client.s_DefaultCore;
+        core ??= s_DefaultCore;
         body.ServiceId = string.IsNullOrEmpty(body.ServiceId) ? ServiceId : body.ServiceId;
 
         return await _httpClient.PostAsync<CreateTransactionResponse>(core.Url.AbsoluteUri + "transactions", body);
@@ -128,13 +129,13 @@ public class PayV2Client : PayV2ClientBase, IPayV2Client
 
     public Task<GetTransactionResponse?> GetTransactionInfo(string transactionId, Core? core = null)
     {
-        core ??= PayV2Client.s_DefaultCore;
+        core ??= s_DefaultCore;
         return _httpClient.GetAsync<GetTransactionResponse>($"{core.Url.AbsoluteUri}transactions/{transactionId}");
     }
 
     public Task<CancelTransactionResponse?> CancelTransaction(string transactionId, Core? core = null)
     {
-        core ??= PayV2Client.s_DefaultCore;
+        core ??= s_DefaultCore;
         return _httpClient.PatchAsync<CancelTransactionResponse>($"{core.Url.AbsoluteUri}transactions/{transactionId}/cancel");
     }
 
@@ -149,5 +150,20 @@ public class PayV2Client : PayV2ClientBase, IPayV2Client
     public Task<ApproveDenyTransactionResponse> VoidTransaction(string transactionId) => _httpClient.PatchAsync<ApproveDenyTransactionResponse>($"transactions/{transactionId}/void")!;
 
     public Task<LoadTransactionResponse> LoadTransaction(string transactionId) => _httpClient.PatchAsync<LoadTransactionResponse>($"transactions/{transactionId}/load")!;
+
     public Task<DocumentAddResponse> AddDocuments(DocumentAddRequest body) => _httpClient.PostAsync<DocumentAddResponse>("documents", body)!;
+
+    public Task<PaymentLinkResponse> PaymentLinkCreate(string serviceId, PaymentLinkRequest body) => _httpClient.PostAsync<PaymentLinkResponse>($"services/{serviceId}/paymentlink", body)!;
+
+    public Task<AuthenticateLoginResponse> AuthenticateLogin(AuthenticateLoginRequest body) => _httpClient.PostAsync<AuthenticateLoginResponse>("login/authenticate", body)!;
+
+    public Task<AuthenticationTokenResponse> AuthenticationTokenCreate(AuthenticationTokenCreateRequest body) => _httpClient.PostAsync<AuthenticationTokenResponse>("authenticationtokens", body)!;
+
+    public Task<AuthenticationTokenResponse> AuthenticationTokenGet(string authenticationTokenCode) => _httpClient.GetAsync<AuthenticationTokenResponse>($"authenticationtokens/{authenticationTokenCode}")!;
+
+    public Task<AuthenticationTokensResponse> AuthenticationTokenBrowse(string merchantCode) => _httpClient.GetAsync<AuthenticationTokensResponse>($"authenticationtokens?merchant={merchantCode}")!;
+
+    public Task DeleteAuthenticationToken(string authenticationTokenCode) => _httpClient.DeleteAsync($"authenticationtokens/{authenticationTokenCode}");
+
+    public Task<AuthenticationTokenResponse> UndeleteAuthenticationToken(string authenticationTokenCode) => _httpClient.PostAsync<AuthenticationTokenResponse>($"authenticationtokens/{authenticationTokenCode}/undelete")!;
 }

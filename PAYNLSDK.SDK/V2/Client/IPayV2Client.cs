@@ -1,4 +1,6 @@
 using PayNlSdk.Sdk.Utilities;
+using PayNlSdk.Sdk.V2.DataTransferModels.Authentication;
+using PayNlSdk.Sdk.V2.DataTransferModels.Authentication.AuthenticationTokens;
 using PayNlSdk.Sdk.V2.DataTransferModels.Currencies;
 using PayNlSdk.Sdk.V2.DataTransferModels.DirectDebit;
 using PayNlSdk.Sdk.V2.DataTransferModels.Documents;
@@ -13,7 +15,6 @@ using PayNlSdk.Sdk.V2.DataTransferModels.Terminals;
 using PayNlSdk.Sdk.V2.DataTransferModels.Trademarks;
 using PayNlSdk.Sdk.V2.DataTransferModels.Transaction;
 using PayNlSdk.Sdk.V2.DataTransferModels.Vouchers;
-using PayNlSdk.Sdk.V3.DataTransferObjects.MerchantManagement.Tokenisation;
 using Service = PayNlSdk.Sdk.V2.DataTransferModels.Merchants.Service;
 
 namespace PayNlSdk.Sdk.V2.Client;
@@ -56,9 +57,7 @@ public interface IPayV2Client
     ///		Creates a direct debit order which provides an incassoOrderId needed for all other Direct debit end points.
     ///		Note: In order to create a recurring debit you will need too set "allow recurring" in the admin panel.
     /// </summary>
-    /// <param name="body"></param>
-    /// <returns></returns>
-    Task<DirectDebitResponse> CreateDirectDebitOrder(CreateDirectDebitOrderRequest body);
+    Task<DirectDebitResponse> CreateDirectDebitOrder(CreateDirectDebitOrderRequest bodsy);
 
     /// <summary>
     ///     Return true if the ip provided is an ip owned by Pay, otherwise it will return false.
@@ -256,7 +255,51 @@ public interface IPayV2Client
     /// Upload a (compliance) document as base64. Uploading is done based on a document code, the content of the document needs to be encoded to base64. You can also specify the filename.
     /// You need to authenticate with an AT code (as username) and the corresponding token (as password) or you can authenticate with an AL code (as username) and the corresponding secret (as password)
     /// </summary>
-    /// <param name="body"></param>
-    /// <returns></returns>
     Task<DocumentAddResponse> AddDocuments(DocumentAddRequest body);
+
+    /// <summary>
+    /// You can create a payment page for invoice payments & donations
+    /// </summary>
+    Task<PaymentLinkResponse> PaymentLinkCreate(string serviceId, PaymentLinkRequest body);
+
+    /// <summary>
+    /// Retrieve a handshake to redirect a user to the Pay platform so that a user can access the Pay platform without entering login credentials.
+    /// Note that the user needs to have the correct rights to use this feature. You need to authenticate this API with the AT-code as username and the token as password
+    /// </summary>
+    Task<AuthenticateLoginResponse> AuthenticateLogin(AuthenticateLoginRequest body);
+
+    /// <summary>
+    /// Creates a new authentication token under a merchant.
+    /// You can also specify which authorisation groups needs to be linked to the token.
+    /// You can also supply a merchantCode. If a merchantCode is supplied then you need to have access to that merchant.
+    /// You need to authenticate with an AT-code as username and a token as password
+    /// </summary>
+    Task<AuthenticationTokenResponse> AuthenticationTokenCreate(AuthenticationTokenCreateRequest body);
+
+    /// <summary>
+    /// Get the details of a specific authentication token.
+    /// Note you need to have access to the merchant if the authentication token is not available under your own merchant registration
+    /// </summary>
+    Task<AuthenticationTokenResponse> AuthenticationTokenGet(string authenticationTokenCode);
+
+    /// <summary>
+    /// Get all authentication tokens.
+    /// If you do not supply a merchantCode we return the authentication tokens that are available under your own merchant registration.
+    /// If you supply a merchantCode you need to have access to that merchant
+    /// </summary>
+    Task<AuthenticationTokensResponse> AuthenticationTokenBrowse(string merchantCode);
+
+    /// <summary>
+    /// Deletes an authentication token.
+    /// Note you need to have access to the merchant if the authentication token is not available under your own merchant registration
+    /// </summary>
+    Task DeleteAuthenticationToken(string authenticationTokenCode);
+
+    /// <summary>
+    /// Undelete an authentication token that was recently deleted.
+    /// This can only be done within a 15-minute time window
+    /// </summary>
+    /// <param name="authenticationTokenCode"></param>
+    /// <returns></returns>
+    Task<AuthenticationTokenResponse> UndeleteAuthenticationToken(string authenticationTokenCode);
 }
