@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace PayNlSdk.Sdk.Utilities;
 
@@ -7,7 +8,8 @@ public class Json
     private static readonly JsonSerializerOptions? SerializerOptions = new()
     {
         WriteIndented = true,
-        Converters = { new DateOnlyConverter() }
+        Converters = { new DateOnlyConverter() },
+        NumberHandling = JsonNumberHandling.AllowReadingFromString,
     };
 
     public static string Serialize(object input)

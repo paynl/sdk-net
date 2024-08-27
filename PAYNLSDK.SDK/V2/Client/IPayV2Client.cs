@@ -18,6 +18,8 @@ namespace PayNlSdk.Sdk.V2.Client;
 
 public interface IPayV2Client
 {
+	public string ServiceId { get; }
+
     /// <summary>
     ///     Get all currencies.
     /// </summary>
