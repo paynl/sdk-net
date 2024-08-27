@@ -27,7 +27,7 @@ public class Orders
 		Assert.NotNull(trx);
 		Assert.NotNull(trx.Id);
 		Assert.NotNull(trx.Amount);
-		Assert.Equal(1000, trx.Amount.Value);
+		Assert.Equal(25000, trx.Amount.Value);
 		Assert.Equal(client.ServiceId, trx.ServiceId);
 	}
 

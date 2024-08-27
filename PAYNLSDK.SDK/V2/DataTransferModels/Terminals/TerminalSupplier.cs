@@ -5,7 +5,7 @@ namespace PayNlSdk.Sdk.V2.DataTransferModels.Terminals;
 public class TerminalSupplier
 {
     [JsonPropertyName("id")]
-    public string? Id { get; set; }
+    public int? Id { get; set; }
 
     [JsonPropertyName("name")]
     public string? Name { get; set; }

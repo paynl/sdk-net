@@ -2,6 +2,7 @@ using System.Net;
 using PayNlSdk.Sdk.Utilities;
 using PayNlSdk.Sdk.V2.DataTransferModels.Currencies;
 using PayNlSdk.Sdk.V2.DataTransferModels.DirectDebit;
+using PayNlSdk.Sdk.V2.DataTransferModels.Documents;
 using PayNlSdk.Sdk.V2.DataTransferModels.Ip;
 using PayNlSdk.Sdk.V2.DataTransferModels.Issuers;
 using PayNlSdk.Sdk.V2.DataTransferModels.Merchants;
@@ -13,6 +14,7 @@ using PayNlSdk.Sdk.V2.DataTransferModels.Terminals;
 using PayNlSdk.Sdk.V2.DataTransferModels.Trademarks;
 using PayNlSdk.Sdk.V2.DataTransferModels.Transaction;
 using PayNlSdk.Sdk.V2.DataTransferModels.Vouchers;
+using PayNlSdk.Sdk.V3.DataTransferObjects.MerchantManagement.Tokenisation;
 using Service = PayNlSdk.Sdk.V2.DataTransferModels.Merchants.Service;
 
 namespace PayNlSdk.Sdk.V2.Client;
@@ -42,6 +44,8 @@ public class PayV2Client : PayV2ClientBase, IPayV2Client
     public Task DeleteDirectDebit(string incassoOrderId) => _httpClient.DeleteAsync($"directdebits/{incassoOrderId}");
 
     public Task<DirectDebitResponse> UpdateDirectDebit(string incassoOrderId, UpdateDirectDebitRequest body) => _httpClient.PatchAsync<DirectDebitResponse>($"directdebits/{incassoOrderId}", body)!;
+
+    public Task<DirectDebitResponse> CreateDirectDebitOrder(CreateDirectDebitOrderRequest body) => _httpClient.PostAsync<DirectDebitResponse>("directdebits", body)!;
 
     public async Task<bool> IpIsPay(string ip)
     {
@@ -145,4 +149,5 @@ public class PayV2Client : PayV2ClientBase, IPayV2Client
     public Task<ApproveDenyTransactionResponse> VoidTransaction(string transactionId) => _httpClient.PatchAsync<ApproveDenyTransactionResponse>($"transactions/{transactionId}/void")!;
 
     public Task<LoadTransactionResponse> LoadTransaction(string transactionId) => _httpClient.PatchAsync<LoadTransactionResponse>($"transactions/{transactionId}/load")!;
+    public Task<DocumentAddResponse> AddDocuments(DocumentAddRequest body) => _httpClient.PostAsync<DocumentAddResponse>("documents", body)!;
 }

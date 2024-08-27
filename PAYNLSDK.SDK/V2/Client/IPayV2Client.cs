@@ -1,6 +1,7 @@
 using PayNlSdk.Sdk.Utilities;
 using PayNlSdk.Sdk.V2.DataTransferModels.Currencies;
 using PayNlSdk.Sdk.V2.DataTransferModels.DirectDebit;
+using PayNlSdk.Sdk.V2.DataTransferModels.Documents;
 using PayNlSdk.Sdk.V2.DataTransferModels.Ip;
 using PayNlSdk.Sdk.V2.DataTransferModels.Issuers;
 using PayNlSdk.Sdk.V2.DataTransferModels.Merchants;
@@ -12,12 +13,15 @@ using PayNlSdk.Sdk.V2.DataTransferModels.Terminals;
 using PayNlSdk.Sdk.V2.DataTransferModels.Trademarks;
 using PayNlSdk.Sdk.V2.DataTransferModels.Transaction;
 using PayNlSdk.Sdk.V2.DataTransferModels.Vouchers;
+using PayNlSdk.Sdk.V3.DataTransferObjects.MerchantManagement.Tokenisation;
 using Service = PayNlSdk.Sdk.V2.DataTransferModels.Merchants.Service;
 
 namespace PayNlSdk.Sdk.V2.Client;
 
 public interface IPayV2Client
 {
+	public string ServiceId { get; }
+
     /// <summary>
     ///     Get all currencies.
     /// </summary>
@@ -47,6 +51,14 @@ public interface IPayV2Client
     ///     Update a directdebit order.
     /// </summary>
     Task<DirectDebitResponse> UpdateDirectDebit(string incassoOrderId, UpdateDirectDebitRequest body);
+
+    /// <summary>
+    ///		Creates a direct debit order which provides an incassoOrderId needed for all other Direct debit end points.
+    ///		Note: In order to create a recurring debit you will need too set "allow recurring" in the admin panel.
+    /// </summary>
+    /// <param name="body"></param>
+    /// <returns></returns>
+    Task<DirectDebitResponse> CreateDirectDebitOrder(CreateDirectDebitOrderRequest body);
 
     /// <summary>
     ///     Return true if the ip provided is an ip owned by Pay, otherwise it will return false.
@@ -229,7 +241,7 @@ public interface IPayV2Client
 
     /// <summary>
     ///     Transactions that have the status authorize (is used by credit card payments or Buy now, Pay later payments)
-    ///     can be voided to reverse the authorisation and to set the the payment state to CANCEL (-90).
+    ///     can be voided to reverse the authorisation and to set the payment state to CANCEL (-90).
     ///     You can use the EX Code or the order Id to void the transaction
     /// </summary>
     Task<ApproveDenyTransactionResponse> VoidTransaction(string transactionId);
@@ -239,4 +251,12 @@ public interface IPayV2Client
     ///     transaction can only be loaded if a transaction has the status 20, 50 and 90 (PENDING)
     /// </summary>
     Task<LoadTransactionResponse> LoadTransaction(string transactionId);
+
+    /// <summary>
+    /// Upload a (compliance) document as base64. Uploading is done based on a document code, the content of the document needs to be encoded to base64. You can also specify the filename.
+    /// You need to authenticate with an AT code (as username) and the corresponding token (as password) or you can authenticate with an AL code (as username) and the corresponding secret (as password)
+    /// </summary>
+    /// <param name="body"></param>
+    /// <returns></returns>
+    Task<DocumentAddResponse> AddDocuments(DocumentAddRequest body);
 }
