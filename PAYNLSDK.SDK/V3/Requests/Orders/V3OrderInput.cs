@@ -1,6 +1,4 @@
 using System.Text.Json.Serialization;
-using PayNlSdk.Sdk.Utilities;
-using PayNlSdk.Sdk.V3.DataTransferObjects.Orders;
 
 namespace PayNlSdk.Sdk.V3.Requests.Orders;
 

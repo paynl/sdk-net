@@ -14,23 +14,23 @@ public class PayV3Client : PayV3ClientBase, IPayV3Client
 	public new string ServiceId => base.ServiceId;
 	public Task<V3Order> CreateOrder(CreateOrderRequest request)
 	{
-		request.ServiceId ??= this.ServiceId;
-		return this._httpClient.PostAsync<V3Order>("orders", request)!;
+		request.ServiceId ??= ServiceId;
+		return _httpClient.PostAsync<V3Order>("orders", request)!;
 	}
 
-	public Task<V3Order> GetOrder(string orderId) => this._httpClient.GetAsync<V3Order>($"orders/{orderId}/status")!;
+	public Task<V3Order> GetOrder(string orderId) => _httpClient.GetAsync<V3Order>($"orders/{orderId}/status")!;
 
-	public Task<V3Order> AbortOrder(string orderId) => this._httpClient.PatchAsync<V3Order>($"orders/{orderId}/abort")!;
+	public Task<V3Order> AbortOrder(string orderId) => _httpClient.PatchAsync<V3Order>($"orders/{orderId}/abort")!;
 
-	public Task<V3Order> CaptureOrder(string orderId) => this._httpClient.PatchAsync<V3Order>($"orders/{orderId}/capture")!;
+	public Task<V3Order> CaptureOrder(string orderId) => _httpClient.PatchAsync<V3Order>($"orders/{orderId}/capture")!;
 
-	public Task<V3Order> CaptureOrder(string orderId, List<ProductToCapture> productsToCapture) => this._httpClient.PatchAsync<V3Order>($"orders/{orderId}/capture/products", new { products = productsToCapture	})!;
+	public Task<V3Order> CaptureOrder(string orderId, List<ProductToCapture> productsToCapture) => _httpClient.PatchAsync<V3Order>($"orders/{orderId}/capture", new { products = productsToCapture	})!;
 
-	public Task<V3Order> CaptureOrder(string orderId, int amountCents) => this._httpClient.PatchAsync<V3Order>($"orders/{orderId}/capture/amount", new { amount = amountCents })!;
+	public Task<V3Order> CaptureOrder(string orderId, int amountCents) => _httpClient.PatchAsync<V3Order>($"orders/{orderId}/capture", new { amount = amountCents })!;
 
-	public Task<V3Order> ApproveOrder(string orderId) => this._httpClient.PatchAsync<V3Order>($"orders/{orderId}/approve")!;
+	public Task<V3Order> ApproveOrder(string orderId) => _httpClient.PatchAsync<V3Order>($"orders/{orderId}/approve")!;
 
-	public Task<V3Order> DeclineOrder(string orderId) => this._httpClient.PatchAsync<V3Order>($"orders/{orderId}/decline")!;
+	public Task<V3Order> DeclineOrder(string orderId) => _httpClient.PatchAsync<V3Order>($"orders/{orderId}/decline")!;
 
-	public Task<V3Order> VoidOrder(string orderId) => this._httpClient.PatchAsync<V3Order>($"orders/{orderId}/void")!;
+	public Task<V3Order> VoidOrder(string orderId) => _httpClient.PatchAsync<V3Order>($"orders/{orderId}/void")!;
 }
