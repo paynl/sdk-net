@@ -71,4 +71,7 @@ public class V3Order
 
         [JsonPropertyName("completedAt")]
         public DateTime? CompletedAt { get; set; }
+
+        [JsonPropertyName("links")]
+        public Dictionary<string, string> Links { get; set; }
 }

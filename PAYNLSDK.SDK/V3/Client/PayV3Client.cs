@@ -21,12 +21,12 @@ public class PayV3Client : PayV3ClientBase, IPayV3Client
 	public Task<V3Order> GetOrder(string orderId) => this._httpClient.GetAsync<V3Order>($"orders/{orderId}/status")!;
 
 	public Task<V3Order> AbortOrder(string orderId) => this._httpClient.PatchAsync<V3Order>($"orders/{orderId}/abort")!;
-	
+
 	public Task<V3Order> CaptureOrder(string orderId) => this._httpClient.PatchAsync<V3Order>($"orders/{orderId}/capture")!;
 
-	public Task<V3Order> CaptureOrder(string orderId, List<ProductToCapture> productsToCapture) => this._httpClient.PatchAsync<V3Order>($"orders/{orderId}/capture", new { products = productsToCapture	})!;
+	public Task<V3Order> CaptureOrder(string orderId, List<ProductToCapture> productsToCapture) => this._httpClient.PatchAsync<V3Order>($"orders/{orderId}/capture/products", new { products = productsToCapture	})!;
 
-	public Task<V3Order> CaptureOrder(string orderId, int amountCents) => this._httpClient.PatchAsync<V3Order>($"orders/{orderId}/capture", new { amount = amountCents })!;
+	public Task<V3Order> CaptureOrder(string orderId, int amountCents) => this._httpClient.PatchAsync<V3Order>($"orders/{orderId}/capture/amount", new { amount = amountCents })!;
 
 	public Task<V3Order> ApproveOrder(string orderId) => this._httpClient.PatchAsync<V3Order>($"orders/{orderId}/approve")!;
 

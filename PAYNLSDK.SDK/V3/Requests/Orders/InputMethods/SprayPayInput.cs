@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace PayNlSdk.Sdk.V3.Requests.Orders.InputMethods;
 
-public class SprayPayInput
+public class SprayPayInput : V3InputMethod
 {
 	[JsonPropertyName("gender")]
 	public string? Gender { get; set; }
