@@ -7,6 +7,8 @@ using PayNlSdk.Sdk.V2.DataTransferModels.Documents;
 using PayNlSdk.Sdk.V2.DataTransferModels.Ip;
 using PayNlSdk.Sdk.V2.DataTransferModels.Issuers;
 using PayNlSdk.Sdk.V2.DataTransferModels.Merchants;
+using PayNlSdk.Sdk.V2.DataTransferModels.Merchants.ClearingLines;
+using PayNlSdk.Sdk.V2.DataTransferModels.Merchants.InvoiceLines;
 using PayNlSdk.Sdk.V2.DataTransferModels.PaymentMethods;
 using PayNlSdk.Sdk.V2.DataTransferModels.Services;
 using PayNlSdk.Sdk.V2.DataTransferModels.SignupProfiles;
@@ -73,6 +75,22 @@ public interface IPayV2Client
     ///     Register a merchant so that the merchant is able to use Pay. to process payments
     /// </summary>
     Task<MerchantResponseWrapper> CreateMerchant(CreateMerchantRequest body);
+
+    /// <summary>
+    ///		A Pay. clearing contains multiple clearing lines. This API returns all clearing lines for a specified period.
+    ///		If you are a partner, and you have rights to your merchants you can retrieve the clearing lines also for your merchants.
+    /// </summary>
+    /// <param name="queryParams">Use <see cref="ClearingLineFilter"/> too build your query parameter</param>
+    /// <returns></returns>
+    Task<ClearingLinesResponse> GetClearingLines(ClearingLineFilter queryParams);
+
+    /// <summary>
+    ///		A Pay. clearing contains multiple clearing lines. This API returns all clearing lines for a specified period.
+    ///		If you are a partner, and you have rights to your merchants you can retrieve the clearing lines also for your merchants.
+    /// </summary>
+    /// <param name="queryParams">Use <see cref="ClearingLineFilter"/> too build your query parameter</param>
+    /// <returns></returns>
+    Task<InvoiceLinesResponse> GetInvoiceLines(InvoiceLineFilter queryParams);
 
     /// <summary>
     ///     Get the details of a specific merchant

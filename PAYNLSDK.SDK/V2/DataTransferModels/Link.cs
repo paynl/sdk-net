@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace PayNlSdk.Sdk.V2.DataTransferModels;
 
-public class Links
+public class Link
 {
 	[JsonPropertyName("href")]
 	public string? Href { get; set; }

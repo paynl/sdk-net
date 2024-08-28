@@ -27,4 +27,7 @@ public class Merchant
 	/// </summary>
 	[JsonPropertyName("incorporationCountry")]
 	public string? IncorporationCountry { get; set; }
+
+	[JsonPropertyName("contractPackage")]
+	public string? ContractPackage { get; set; }
 }

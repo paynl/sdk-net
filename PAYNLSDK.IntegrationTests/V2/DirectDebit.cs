@@ -13,8 +13,7 @@ public class DirectDebit
 		var client = TestHelper.CreateClientV2();
 		var ddo = await client.CreateDirectDebitOrder(new CreateDirectDebitOrderRequest
 		{
-			// ServiceId = Environment.GetEnvironmentVariable("PAY_SERVICEID"),
-			ServiceId = "SL-3490-4320",
+			ServiceId = Environment.GetEnvironmentVariable("PAY_SERVICEID"),
 			Amount = new Amount
 			{
 				Value = 1,
@@ -23,9 +22,9 @@ public class DirectDebit
 			{
 				BankAccount = new PaymentBankAccount
 				{
-					Iban = "NL42INGB0395882842",
+					Iban = "NL42INGB0000000000",
 					Bic = "INGBNL2A",
-					Owner = "RP Rohm"
+					Owner = "Test Owner"
 				}
 			}
 		});
@@ -41,8 +40,7 @@ public class DirectDebit
 		var client = TestHelper.CreateClientV2();
 		var ddo = await client.CreateDirectDebitOrder(new CreateDirectDebitOrderRequest
 		{
-			// ServiceId = Environment.GetEnvironmentVariable("PAY_SERVICEID"),
-			ServiceId = "SL-3490-4320",
+			ServiceId = Environment.GetEnvironmentVariable("PAY_SERVICEID"),
 			ProcessDate = new DateTime(2024, 9,2),
 			Amount = new Amount
 			{
@@ -52,9 +50,9 @@ public class DirectDebit
 			{
 				BankAccount = new PaymentBankAccount
 				{
-					Iban = "NL42INGB0395882842",
+					Iban = "NL42INGB0000000000",
 					Bic = "INGBNL2A",
-					Owner = "RP Rohm"
+					Owner = "Test"
 				}
 			},
 			Interval = new Interval()
@@ -95,9 +93,9 @@ public class DirectDebit
 			{
 				BankAccount = new PaymentBankAccount
 				{
-					Iban = "NL42INGB0395882842",
+					Iban = "NL42INGB0000000000",
 					Bic = "INGBNL2A",
-					Owner = "RP Rohm"
+					Owner = "Test "
 				}
 			}
 		});

@@ -8,6 +8,8 @@ using PayNlSdk.Sdk.V2.DataTransferModels.Documents;
 using PayNlSdk.Sdk.V2.DataTransferModels.Ip;
 using PayNlSdk.Sdk.V2.DataTransferModels.Issuers;
 using PayNlSdk.Sdk.V2.DataTransferModels.Merchants;
+using PayNlSdk.Sdk.V2.DataTransferModels.Merchants.ClearingLines;
+using PayNlSdk.Sdk.V2.DataTransferModels.Merchants.InvoiceLines;
 using PayNlSdk.Sdk.V2.DataTransferModels.PaymentMethods;
 using PayNlSdk.Sdk.V2.DataTransferModels.Services;
 using PayNlSdk.Sdk.V2.DataTransferModels.SignupProfiles;
@@ -66,7 +68,11 @@ public class PayV2Client : PayV2ClientBase, IPayV2Client
 
     public Task<IpListResponse> GetAllIps() => _httpClient.GetAsync<IpListResponse>("ipaddresses")!;
 
-    public Task<MerchantResponseWrapper> CreateMerchant(CreateMerchantRequest body) => _httpClient.GetAsync<MerchantResponseWrapper>("merchants")!;
+    public Task<ClearingLinesResponse> GetClearingLines(ClearingLineFilter queryParams) => _httpClient.GetAsync<ClearingLinesResponse>($"clearinglines{queryParams.Build()}")!;
+
+    public Task<InvoiceLinesResponse> GetInvoiceLines(InvoiceLineFilter queryParams) => _httpClient.GetAsync<InvoiceLinesResponse>($"invoicelines{queryParams.Build()}")!;
+
+    public Task<MerchantResponseWrapper> CreateMerchant(CreateMerchantRequest body) => _httpClient.PostAsync<MerchantResponseWrapper>("merchants", body)!;
 
     public Task<MerchantResponse> GetMerchant(string merchantCode) => _httpClient.GetAsync<MerchantResponse>($"merchants/{merchantCode}")!;
 

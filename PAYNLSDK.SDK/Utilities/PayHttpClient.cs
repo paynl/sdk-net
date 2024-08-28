@@ -1,7 +1,6 @@
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using PayNlSdk.Sdk.V3.DataTransferObjects;
 
 namespace PayNlSdk.Sdk.Utilities;
 

@@ -16,16 +16,16 @@ public class Authentication
 			Login = new Login
 			{
 				InactivityExpire = 1800,
-				InternalId = "Rudi2",
+				InternalId = "Test",
 				DeviceId = "",
 				IpAddress = "",
 				UserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0",
 			},
 			Account = new Account
 			{
-				LicenseCode = "AL-8024-4304",
+				LicenseCode = "AL-0000-0000",
 				LogoutRedirectUrl = "https://google.com",
-				Label = "Rudi Rohm",
+				Label = "",
 				LanguageId = "nl_NL"
 			}
 		});

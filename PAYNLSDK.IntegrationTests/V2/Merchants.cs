@@ -8,7 +8,7 @@ namespace PayNlSdk.IntegrationTests.V2;
 
 public class Merchants
 {
-    [Fact(Skip = "No rights to access this endpoint")]
+    [Fact]
     public async Task CreateMerchant()
     {
         var client = TestHelper.CreateClientV2();
@@ -42,6 +42,7 @@ public class Merchants
                     {
                         FirstName = "Mister",
                         LastName = "Rogers",
+                        Email = "MisterRogers@testmail.com",
                         Platform = new Platform
                         {
                             Authorisation = "all",

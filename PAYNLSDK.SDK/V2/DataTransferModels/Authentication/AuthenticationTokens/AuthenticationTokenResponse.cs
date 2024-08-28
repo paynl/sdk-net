@@ -35,5 +35,5 @@ public class AuthenticationTokenResponse
 	public string? DeletedBy { get; set; }
 
 	[JsonPropertyName("_links")]
-	public List<Links>? Links { get; set; }
+	public List<Link>? Links { get; set; }
 }

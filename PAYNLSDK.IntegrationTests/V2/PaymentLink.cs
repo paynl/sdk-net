@@ -11,7 +11,7 @@ public class PaymentLink
 	{
 		var client = TestHelper.CreateClientV2();
 
-		var paymentLink = await client.PaymentLinkCreate("SL-3490-4320", new PaymentLinkRequest
+		var paymentLink = await client.PaymentLinkCreate(Environment.GetEnvironmentVariable("PAY_SERVICEID") ?? "", new PaymentLinkRequest
 		{
 			SecurityMode = 0,
 			Language = "nl_NL",
