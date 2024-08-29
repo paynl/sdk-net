@@ -72,7 +72,7 @@ public class DirectDebit
 	public async Task GetDirectDebit()
 	{
 		var client = TestHelper.CreateClientV2();
-		var order = await client.GetDirectDebit("IO-9372-1453-6142");
+		var order = await client.GetDirectDebit("IO-9227-5458-6252");
 
 		Assert.NotNull(order);
 		Assert.NotNull(order.Mandate?.Id);
@@ -120,7 +120,7 @@ public class DirectDebit
     {
         var client = TestHelper.CreateClientV2();
 
-        var dd = await client.CreateDirectDebit("IO-9372-1453-6142", new CreateDirectDebitRequest
+        var dd = await client.CreateDirectDebit("IO-9227-5458-6252", new CreateDirectDebitRequest
         {
             Amount = new Amount
             {
@@ -131,5 +131,39 @@ public class DirectDebit
 
         Assert.NotNull(dd);
         Assert.NotNull(dd.Mandate);
+    }
+
+
+    [Fact]
+    public async Task CreateMandate()
+    {
+	    var client = TestHelper.CreateClientV2();
+	    var mandate = await client.CreateMandate(new CreateMandateRequest
+	    {
+		    ServiceId = Environment.GetEnvironmentVariable("PAY_SERVICEID")!,
+		    Amount= 1,
+		    Bankaccountholder = Environment.GetEnvironmentVariable("PAY_BANKACCOUNTHOLDER")!,
+		    ProcessDate = DateTime.Now.ToString("dd-MM-yyyy"),
+		    Description = "Test run",
+		    BankaccountNumber = Environment.GetEnvironmentVariable("PAY_BANKACCOUNTNUMBER")!
+	    });
+
+	    Assert.NotNull(mandate.MandateId);
+    }
+
+    [Fact]
+    public async Task CreateFlexibleDirectDebit()
+    {
+	    var client = TestHelper.CreateClientV2();
+	    var test = await client.CreateFlexibleDirectDebit(new FlexibleDirectDebitRequest
+	    {
+		    MandateId = "IO-2274-8936-8111",
+		    Amount = 1,
+		    ProcessDate = DateTime.Now.ToString("dd-MM-yyyy"),
+		    Description = "Test run",
+		    Last = false,
+	    });
+
+	    Assert.NotNull(test);
     }
 }

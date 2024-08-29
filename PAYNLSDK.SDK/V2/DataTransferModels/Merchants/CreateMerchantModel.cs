@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using PayNlSdk.Sdk.V2.DataTransferModels.ClearingAccounts;
 using PayNlSdk.Sdk.V2.DataTransferModels.Transaction;
 
 namespace PayNlSdk.Sdk.V2.DataTransferModels.Merchants;

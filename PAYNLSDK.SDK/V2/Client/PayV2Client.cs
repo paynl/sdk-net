@@ -2,6 +2,8 @@ using System.Net;
 using PayNlSdk.Sdk.Utilities;
 using PayNlSdk.Sdk.V2.DataTransferModels.Authentication;
 using PayNlSdk.Sdk.V2.DataTransferModels.Authentication.AuthenticationTokens;
+using PayNlSdk.Sdk.V2.DataTransferModels.ClearingAccounts;
+using PayNlSdk.Sdk.V2.DataTransferModels.ContactMethods;
 using PayNlSdk.Sdk.V2.DataTransferModels.Currencies;
 using PayNlSdk.Sdk.V2.DataTransferModels.DirectDebit;
 using PayNlSdk.Sdk.V2.DataTransferModels.Documents;
@@ -40,6 +42,10 @@ public class PayV2Client : PayV2ClientBase, IPayV2Client
 
     public Task<IssuerListResponse?> GetAllPaymentIssuers() => _httpClient.GetAsync<IssuerListResponse>("issuers");
 
+    public Task<CreateMandateResponse> CreateMandate(CreateMandateRequest body, string? baseurl = "https://rest-api.pay.nl/v3/") => _httpClient.PostAsync<CreateMandateResponse>($"{baseurl}DirectDebit/mandateAdd/json", body)!;
+
+    public Task<FlexibleDirectDebitResponse> CreateFlexibleDirectDebit(FlexibleDirectDebitRequest body, string? baseurl = "https://rest-api.pay.nl/v3/") => _httpClient.PostAsync<FlexibleDirectDebitResponse>($"{baseurl}DirectDebit/mandateDebit/json", body)!;
+
     public Task<DirectDebitResponse> CreateDirectDebit(string incassoOrderId, CreateDirectDebitRequest body) => _httpClient.PostAsync<DirectDebitResponse>($"directdebits/{incassoOrderId}/debits", body)!;
 
     public Task<DirectDebitResponse> GetDirectDebit(string incassoOrderId) => _httpClient.GetAsync<DirectDebitResponse>($"directdebits/{incassoOrderId}")!;
@@ -76,11 +82,17 @@ public class PayV2Client : PayV2ClientBase, IPayV2Client
 
     public Task<MerchantResponse> GetMerchant(string merchantCode) => _httpClient.GetAsync<MerchantResponse>($"merchants/{merchantCode}")!;
 
+    public Task<MerchantDetailedResponse> GetMerchantDetailed(string merchantCode) => _httpClient.GetAsync<MerchantDetailedResponse>($"merchants/{merchantCode}/info")!;
+
     public Task<MerchantListResponse> ListMerchants() => _httpClient.GetAsync<MerchantListResponse>("merchants")!;
 
     public Task DeleteMerchant(string merchantCode) => _httpClient.DeleteAsync($"merchants/{merchantCode}");
 
+    public Task<MerchantResponse> UnDeleteMerchant(string merchantCode) => _httpClient.PostAsync<MerchantResponse>($"merchants/{merchantCode}/undelete")!;
+
     public Task<MerchantResponse> UpdateMerchant(string merchantCode, UpdateMerchantRequest body) => _httpClient.PatchAsync<MerchantResponse>($"merchants/{merchantCode}", body)!;
+
+    public Task UpdateMerchantPackage(string merchantCode, string referralProfileCode) => _httpClient.PatchAsync<MerchantResponse>($"merchants/{merchantCode}/package", referralProfileCode)!;
 
     public Task RequestMerchantReview(string merchantCode) => _httpClient.PatchAsync($"merchants/{merchantCode}/ready");
 
@@ -103,9 +115,15 @@ public class PayV2Client : PayV2ClientBase, IPayV2Client
 
     public Task<PinTransactionCancelResponse> CancelPinTransaction(string transactionHash) => _httpClient.GetAsync<PinTransactionCancelResponse>($"https://pin.pay.nl/api/cancel?hash={transactionHash}")!;
 
+    public Task<GetTerminalResponse> CreateTerminal(TerminalRequest body) => _httpClient.PostAsync<GetTerminalResponse>("terminals", body)!;
+
     public Task<GetTerminalResponse> GetTerminal(string terminalCode) => _httpClient.GetAsync<GetTerminalResponse>($"terminals/{terminalCode}")!;
 
     public Task<TerminalListResponse> GetAllTerminals() => _httpClient.GetAsync<TerminalListResponse>("terminals")!;
+
+    public Task DeleteTerminal(string terminalCode) => _httpClient.DeleteAsync($"terminals/{terminalCode}");
+
+    public Task<TerminalListResponse> UndeleteTerminal(string terminalCode) => _httpClient.PostAsync<TerminalListResponse>($"terminals/{terminalCode}/undelete")!;
 
     public Task<TrademarkResponse> GetTrademark(string trademarkCode) => _httpClient.GetAsync<TrademarkResponse>($"trademarks/{trademarkCode}")!;
 
@@ -172,4 +190,26 @@ public class PayV2Client : PayV2ClientBase, IPayV2Client
     public Task DeleteAuthenticationToken(string authenticationTokenCode) => _httpClient.DeleteAsync($"authenticationtokens/{authenticationTokenCode}");
 
     public Task<AuthenticationTokenResponse> UndeleteAuthenticationToken(string authenticationTokenCode) => _httpClient.PostAsync<AuthenticationTokenResponse>($"authenticationtokens/{authenticationTokenCode}/undelete")!;
+
+    public Task<ClearingAccountResponse> CreateClearingAccount(CreateClearingAccountRequest body) => _httpClient.PostAsync<ClearingAccountResponse>("clearingaccounts", body)!;
+
+    public Task<ClearingAccountResponse> GetClearingAccount(string clearingAccountCode) => _httpClient.GetAsync<ClearingAccountResponse>($"clearingaccounts/{clearingAccountCode}")!;
+
+    public Task<ClearingAccountBrowseResponse> BrowseClearingAccounts(string merchantCode) => _httpClient.GetAsync<ClearingAccountBrowseResponse>($"clearingaccounts?merchant={merchantCode}")!;
+
+    public Task DeleteClearingAccount(string clearingAccountCode) => _httpClient.DeleteAsync($"clearingaccounts/{clearingAccountCode}");
+
+    public Task<ClearingAccountResponse> UndeleteClearingAccount(string clearingAccountCode) => _httpClient.PostAsync<ClearingAccountResponse>($"clearingaccounts/{clearingAccountCode}/undelete")!;
+
+    public Task<ContactMethodResponse> CreateContactMethod(CreateContactMethodsRequest body) => _httpClient.PostAsync<ContactMethodResponse>("contactmethods", body)!;
+
+    public Task<ContactMethodResponse> UpdateContactMethod(string contactMethodCode, ContactMethod body) => _httpClient.PatchAsync<ContactMethodResponse>($"contactmethods/{contactMethodCode}", body)!;
+
+    public Task<ContactMethodResponse> GetContactMethod(string contactMethodCode) => _httpClient.GetAsync<ContactMethodResponse>($"contactmethods/{contactMethodCode}")!;
+
+    public Task<ContactMethodsResponse> BrowseContactMethods(string merchantCode) => _httpClient.GetAsync<ContactMethodsResponse>($"contactmethods?merchant={merchantCode}")!;
+
+    public Task DeleteContactMethod(string contactMethodCode) => _httpClient.DeleteAsync($"contactmethods/{contactMethodCode}");
+
+    public Task<ContactMethodResponse> UndeleteContactMethod(string clearingAccountCode) => _httpClient.PostAsync<ContactMethodResponse>($"clearingaccounts/{clearingAccountCode}/undelete")!;
 }

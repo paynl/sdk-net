@@ -1,6 +1,8 @@
 using PayNlSdk.Sdk.Utilities;
 using PayNlSdk.Sdk.V2.DataTransferModels.Authentication;
 using PayNlSdk.Sdk.V2.DataTransferModels.Authentication.AuthenticationTokens;
+using PayNlSdk.Sdk.V2.DataTransferModels.ClearingAccounts;
+using PayNlSdk.Sdk.V2.DataTransferModels.ContactMethods;
 using PayNlSdk.Sdk.V2.DataTransferModels.Currencies;
 using PayNlSdk.Sdk.V2.DataTransferModels.DirectDebit;
 using PayNlSdk.Sdk.V2.DataTransferModels.Documents;
@@ -34,6 +36,16 @@ public interface IPayV2Client
     /// Get all issuers.
     /// </summary>
     Task<IssuerListResponse?> GetAllPaymentIssuers();
+
+    /// <summary>
+    /// To use flexible direct debit, a mandate must be created for each end user. This process is described in the following steps.
+    /// </summary>
+    Task<CreateMandateResponse> CreateMandate(CreateMandateRequest body, string? baseurl = "https://rest-api.pay.nl/v3/");
+
+    /// <summary>
+    /// Create flexible direct debit
+    /// </summary>
+    Task<FlexibleDirectDebitResponse> CreateFlexibleDirectDebit(FlexibleDirectDebitRequest body, string? baseurl = "https://rest-api.pay.nl/v3/");
 
     /// <summary>
     ///     Create a recurring debit.
@@ -98,6 +110,11 @@ public interface IPayV2Client
     Task<MerchantResponse> GetMerchant(string merchantCode);
 
     /// <summary>
+    ///		Get detailed information of a specific merchant
+    /// </summary>
+    Task<MerchantDetailedResponse> GetMerchantDetailed(string merchantCode);
+
+    /// <summary>
     ///     Get the details of a specific merchant
     /// </summary>
     Task<MerchantListResponse> ListMerchants();
@@ -108,12 +125,23 @@ public interface IPayV2Client
     Task DeleteMerchant(string merchantCode);
 
     /// <summary>
+    ///		Undelete a merchant that was recently deleted. This can only be done within a 15 minute time window
+    /// </summary>
+    Task<MerchantResponse> UnDeleteMerchant(string merchantCode);
+
+    /// <summary>
     ///     Update the merchant data. If you want to update the relating objects (e.g. authentication tokens or accounts etc)
     ///     you can use the specific endpoints for that.
     ///     You need to have access to the merchantCode that you supply or it needs to be your own merchantCode.
     ///     You need to authenticate with an AT-code as username and the corresponding token as password
     /// </summary>
     Task<MerchantResponse> UpdateMerchant(string merchantCode, UpdateMerchantRequest body);
+
+    /// <summary>
+    /// Update the package. If a merchantCode is supplied then you need to have access to that merchant.
+    /// You need to authenticate with an AT-code as username and the corresponding token as password.
+    /// </summary>
+    Task UpdateMerchantPackage(string merchantCode, string referralProfileCode);
 
     /// <summary>
     ///     When all documents for a merchant are delivered to Pay and the merchant data is ready to be reviewed by our
@@ -160,6 +188,11 @@ public interface IPayV2Client
     Task<PinTransactionCancelResponse> CancelPinTransaction(string transactionHash);
 
     /// <summary>
+    ///		Create a terminal for a service location from a merchant so that the terminal can be used.
+    /// </summary>
+    Task<GetTerminalResponse> CreateTerminal(TerminalRequest body);
+
+    /// <summary>
     ///     Get for a specific terminal linked to your account the contract details, active terminal brands and the actual
     ///     status of the terminal
     /// </summary>
@@ -170,6 +203,16 @@ public interface IPayV2Client
     ///     actual status of a terminal
     /// </summary>
     Task<TerminalListResponse> GetAllTerminals();
+
+    /// <summary>
+    /// Remove a terminal from a merchant. You can undelete within a 15 minute time window
+    /// </summary>
+    Task DeleteTerminal(string terminalCode);
+
+    /// <summary>
+    ///	Undelete a terminal that was rececently deleted. This can only be done witin a 15 minute time window
+    /// </summary>
+    Task<TerminalListResponse> UndeleteTerminal(string terminalCode);
 
     /// <summary>
     ///     Get a specific trademark.
@@ -317,7 +360,74 @@ public interface IPayV2Client
     /// Undelete an authentication token that was recently deleted.
     /// This can only be done within a 15-minute time window
     /// </summary>
-    /// <param name="authenticationTokenCode"></param>
-    /// <returns></returns>
     Task<AuthenticationTokenResponse> UndeleteAuthenticationToken(string authenticationTokenCode);
+
+    /// <summary>
+    /// Creates a new clearing account for a merchant.
+    /// The clearing accounts needs to be a business clearing account, private accounts are not accepted.
+    /// You can also supply a merchantCode.
+    /// If a merchantCode is supplied then you need to have access to that merchant
+    /// </summary>
+    Task<ClearingAccountResponse> CreateClearingAccount(CreateClearingAccountRequest body);
+
+    /// <summary>
+    ///	Get the details of a specific clearing account.
+    /// Note you need to have access to the merchant if the clearing account is not available under your own merchant registration.
+    /// </summary>
+    Task<ClearingAccountResponse> GetClearingAccount(string clearingAccountCode);
+
+    /// <summary>
+    /// Get all clearing accounts.
+    /// If you do not supply a merchantCode we return the clearing accounts that are available under your own merchant registration.
+    /// If you supply a merchantCode you need to have access to that merchant
+    /// </summary>
+    Task<ClearingAccountBrowseResponse> BrowseClearingAccounts(string merchantCode);
+
+    /// <summary>
+    ///	Deletes a clearing account.
+    /// Note you need to have access to the merchant if the clearing account is not available under your own merchant registration
+    /// </summary>
+    Task DeleteClearingAccount(string clearingAccountCode);
+
+    /// <summary>
+    /// Undelete a clearing account that was recently deleted.
+    /// This can only be done within a 15 minute time window.
+    /// </summary>
+    Task<ClearingAccountResponse> UndeleteClearingAccount(string clearingAccountCode);
+
+    /// <summary>
+    /// Creates a new contact method for a merchant. You can indicate per contact method if the contact details are public.
+    /// If they are public they can be used in communication with end users. You can also supply a merchantCode.
+    /// If a merchantCode is supplied then you need to have access to that merchant
+    /// </summary>
+    Task<ContactMethodResponse> CreateContactMethod(CreateContactMethodsRequest body);
+
+    /// <summary>
+    /// Updates a contact method for a merchant.
+    /// All fields for the request are optional.
+    /// Note you need to have access to the merchant if the contact method that you want to update is not available under your own merchant registration
+    /// </summary>
+    Task<ContactMethodResponse> UpdateContactMethod(string contactMethodCode, ContactMethod body);
+
+    /// <summary>
+    /// Get the details of a specific contact method.
+    /// Note you need to have access to the merchant if the contact method is not available under your own merchant registration
+    /// </summary>
+    Task<ContactMethodResponse> GetContactMethod(string contactMethodCode);
+
+    /// <summary>
+    /// Get all contact methods. If you do not supply a merchantCode we return the contact methods that are available under your own merchant registration.
+    /// If you supply a merchantCode you need to have access to that merchant
+    /// </summary>
+    Task<ContactMethodsResponse> BrowseContactMethods(string merchantCode);
+
+    /// <summary>
+    /// Deletes a contact method. Note you need to have access to the merchant if the contact method is not available under your own merchant registration
+    /// </summary>
+    Task DeleteContactMethod(string contactMethodCode);
+
+    /// <summary>
+    /// Undelete a contact method that was recently deleted. This can only be done within a 15 minute time window
+    /// </summary>
+    Task<ContactMethodResponse> UndeleteContactMethod(string clearingAccountCode);
 }
