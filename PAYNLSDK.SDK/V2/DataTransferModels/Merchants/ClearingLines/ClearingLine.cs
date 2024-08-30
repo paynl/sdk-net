@@ -13,7 +13,7 @@ public class ClearingLine
 	public Merchant? Type { get; set; }
 
 	[JsonPropertyName("turnoverGroup")]
-	public TurnoverGroup? TurnoverGroup { get; set; }
+	public TurnoverGroupMerchant? TurnoverGroup { get; set; }
 
 	[JsonPropertyName("clearingLineType")]
 	public ClearingLineType? ClearingLineType { get; set; }

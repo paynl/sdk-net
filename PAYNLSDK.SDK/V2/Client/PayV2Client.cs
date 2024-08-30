@@ -9,6 +9,7 @@ using PayNlSdk.Sdk.V2.DataTransferModels.DirectDebit;
 using PayNlSdk.Sdk.V2.DataTransferModels.Documents;
 using PayNlSdk.Sdk.V2.DataTransferModels.Ip;
 using PayNlSdk.Sdk.V2.DataTransferModels.Issuers;
+using PayNlSdk.Sdk.V2.DataTransferModels.Licenses;
 using PayNlSdk.Sdk.V2.DataTransferModels.Merchants;
 using PayNlSdk.Sdk.V2.DataTransferModels.Merchants.ClearingLines;
 using PayNlSdk.Sdk.V2.DataTransferModels.Merchants.InvoiceLines;
@@ -19,6 +20,7 @@ using PayNlSdk.Sdk.V2.DataTransferModels.TerminalPayments;
 using PayNlSdk.Sdk.V2.DataTransferModels.Terminals;
 using PayNlSdk.Sdk.V2.DataTransferModels.Trademarks;
 using PayNlSdk.Sdk.V2.DataTransferModels.Transaction;
+using PayNlSdk.Sdk.V2.DataTransferModels.TurnoverGroups;
 using PayNlSdk.Sdk.V2.DataTransferModels.Vouchers;
 using Service = PayNlSdk.Sdk.V2.DataTransferModels.Merchants.Service;
 
@@ -212,4 +214,26 @@ public class PayV2Client : PayV2ClientBase, IPayV2Client
     public Task DeleteContactMethod(string contactMethodCode) => _httpClient.DeleteAsync($"contactmethods/{contactMethodCode}");
 
     public Task<ContactMethodResponse> UndeleteContactMethod(string clearingAccountCode) => _httpClient.PostAsync<ContactMethodResponse>($"clearingaccounts/{clearingAccountCode}/undelete")!;
+
+    public Task<LicenseResponse> CreateLicense(LicenseRequest body) => _httpClient.PostAsync<LicenseResponse>("licenses", body)!;
+
+    public Task<LicenseResponse> UpdateLicense(string licenseCode, LicenseUpdateRequest body) => _httpClient.PatchAsync<LicenseResponse>($"licenses/{licenseCode}", body)!;
+
+    public Task<LicenseResponse> GetLicense(string licenseCode) => _httpClient.GetAsync<LicenseResponse>($"licenses/{licenseCode}")!;
+
+    public Task<LicensesBrowseResponse> BrowseLicenses(string merchantCode) => _httpClient.GetAsync<LicensesBrowseResponse>($"licenses?merchant={merchantCode}")!;
+
+    public Task DeleteLicense(string licenseCode) => _httpClient.DeleteAsync($"licenses/{licenseCode}");
+
+    public Task<LicenseResponse> UndeleteLicense(string licenseCode) => _httpClient.PostAsync<LicenseResponse>($"licenses/{licenseCode}/undelete")!;
+
+    public Task<TurnoverGroupResponse> CreateTurnoverGroup(TurnoverGroupRequest body) => _httpClient.PostAsync<TurnoverGroupResponse>("turnovergroups", body)!;
+
+    public Task<TurnoverGroupResponse> GetTurnoverGroup(string turnoverGroupCode) => _httpClient.GetAsync<TurnoverGroupResponse>($"turnovergroups/{turnoverGroupCode}")!;
+
+    public Task<TurnoverGroupBrowseResponse> BrowseTurnoverGroups(string merchantCode) => _httpClient.GetAsync<TurnoverGroupBrowseResponse>($"turnovergroups?merchant={merchantCode}")!;
+
+    public Task DeleteTurnoverGroup(string turnoverGroupCode) => _httpClient.DeleteAsync($"turnovergroups/{turnoverGroupCode}");
+
+    public Task<TurnoverGroupResponse> UndeleteTurnoverGroup(string turnoverGroupCode) => _httpClient.PostAsync<TurnoverGroupResponse>($"turnovergroups/{turnoverGroupCode}/undelete")!;
 }

@@ -8,6 +8,7 @@ using PayNlSdk.Sdk.V2.DataTransferModels.DirectDebit;
 using PayNlSdk.Sdk.V2.DataTransferModels.Documents;
 using PayNlSdk.Sdk.V2.DataTransferModels.Ip;
 using PayNlSdk.Sdk.V2.DataTransferModels.Issuers;
+using PayNlSdk.Sdk.V2.DataTransferModels.Licenses;
 using PayNlSdk.Sdk.V2.DataTransferModels.Merchants;
 using PayNlSdk.Sdk.V2.DataTransferModels.Merchants.ClearingLines;
 using PayNlSdk.Sdk.V2.DataTransferModels.Merchants.InvoiceLines;
@@ -18,6 +19,7 @@ using PayNlSdk.Sdk.V2.DataTransferModels.TerminalPayments;
 using PayNlSdk.Sdk.V2.DataTransferModels.Terminals;
 using PayNlSdk.Sdk.V2.DataTransferModels.Trademarks;
 using PayNlSdk.Sdk.V2.DataTransferModels.Transaction;
+using PayNlSdk.Sdk.V2.DataTransferModels.TurnoverGroups;
 using PayNlSdk.Sdk.V2.DataTransferModels.Vouchers;
 using Service = PayNlSdk.Sdk.V2.DataTransferModels.Merchants.Service;
 
@@ -25,8 +27,6 @@ namespace PayNlSdk.Sdk.V2.Client;
 
 public interface IPayV2Client
 {
-	public string ServiceId { get; }
-
     /// <summary>
     ///     Get all currencies.
     /// </summary>
@@ -430,4 +430,72 @@ public interface IPayV2Client
     /// Undelete a contact method that was recently deleted. This can only be done within a 15 minute time window
     /// </summary>
     Task<ContactMethodResponse> UndeleteContactMethod(string clearingAccountCode);
+
+    /// <summary>
+    /// Create a new license and a Pay account under a merchant.
+    /// You can indicate if the license is authorized to sign or an UBO and you can indicate which rights the account should have.
+    /// You can also supply a merchant. If a merchant is supplied then you need to have access to that merchant.
+    /// You need to authenticate with an AT-code as username and a token as password.
+    /// </summary>
+    Task<LicenseResponse> CreateLicense(LicenseRequest body);
+
+    /// <summary>
+    ///	Updates a license under a merchant.
+    /// You can indicate if the license is authorized to sign or an UBO and you can indicate which rights the account should have.
+    /// You need to have access to that merchant to update the license.
+    /// You need to authenticate with an AT-code as username and a token as password.
+    /// </summary>
+    Task<LicenseResponse> UpdateLicense(string licenseCode, LicenseUpdateRequest body);
+
+    /// <summary>
+    ///	Get a specific license linked to a merchant.
+    /// </summary>
+    Task<LicenseResponse> GetLicense(string licenseCode);
+
+    /// <summary>
+    ///	Get all licenses linked to a merchant.
+    /// </summary>
+    Task<LicensesBrowseResponse> BrowseLicenses(string merchantCode);
+
+    /// <summary>
+    ///	Remove a license from a merchant. You can unsuspend within a 15 minute time window.
+    /// </summary>
+    Task DeleteLicense(string licenseCode);
+
+    /// <summary>
+    ///	Unsuspend a license that was recently deleted. This can only be done within a 15 minute time window.
+    /// </summary>
+    Task<LicenseResponse> UndeleteLicense(string licenseCode);
+
+    /// <summary>
+    /// If you want to group your revenue to get better insights or you want to use multiple clearing accounts, you can create a turnovergroup.
+    /// You can link a turnovergroup to a clearingaccount.
+    /// You can also supply a merchantCode. If a merchantCode is supplied then you need to have access to that merchant
+    /// </summary>
+    Task<TurnoverGroupResponse> CreateTurnoverGroup(TurnoverGroupRequest body);
+
+    /// <summary>
+    /// Get the details of a specific turnover group.
+    /// Note you need to have access to the merchant if the turnover group is not available under your own merchant registration
+    /// </summary>
+    Task<TurnoverGroupResponse> GetTurnoverGroup(string turnoverGroupCode);
+
+    /// <summary>
+    /// Get all turnover groups.
+    /// If you do not supply a merchantCode we return the turnover groups that are available under your own merchant registration.
+    /// If you supply a merchantCode you need to have access to that merchant
+    /// </summary>
+    Task<TurnoverGroupBrowseResponse> BrowseTurnoverGroups(string merchantCode);
+
+    /// <summary>
+    /// Deletes a turnover group.
+    /// Note you need to have access to the merchant if the turnover group is not available under your own merchant registration
+    /// </summary>
+    Task DeleteTurnoverGroup(string turnoverGroupCode);
+
+    /// <summary>
+    /// Undelete a turnover group that was recently deleted.
+    /// This can only be done within a 15 minute time window
+    /// </summary>
+    Task<TurnoverGroupResponse> UndeleteTurnoverGroup(string turnoverGroupCode);
 }

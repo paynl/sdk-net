@@ -5,7 +5,7 @@ namespace PayNlSdk.IntegrationTests.V2;
 
 public class ContactMethods
 {
-		[Fact]
+	[Fact]
 	public async Task CreateContactMethod()
 	{
 		var client = TestHelper.CreateClientV2();
@@ -24,6 +24,20 @@ public class ContactMethods
 		});
 
 		Assert.NotNull(clearingAccount.Code);
+
+		var updatedClearingAccount = await client.UpdateContactMethod(clearingAccount.Code,
+			new ContactMethod()
+			{
+				Type = "email",
+				Value = "test2@mail.com",
+				Public = false,
+				Notifications = false,
+				Description = "Test"
+			});
+
+		Assert.False(updatedClearingAccount.Public);
+		Assert.Equal("test2@mail.com", updatedClearingAccount.Value);
+
 
 		await client.DeleteContactMethod(clearingAccount.Code);
 		var undeletedAccount = await client.UndeleteContactMethod(clearingAccount.Code);
