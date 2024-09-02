@@ -8,7 +8,7 @@ namespace PayNlSdk.IntegrationTests.V2;
 
 public class Merchants
 {
-    [Fact(Skip = "No rights to access this endpoint")]
+    [Fact]
     public async Task CreateMerchant()
     {
         var client = TestHelper.CreateClientV2();
@@ -42,6 +42,7 @@ public class Merchants
                     {
                         FirstName = "Mister",
                         LastName = "Rogers",
+                        Email = "MisterRogers@testmail.com",
                         Platform = new Platform
                         {
                             Authorisation = "all",
@@ -56,7 +57,9 @@ public class Merchants
             }
         });
 
-        Assert.NotNull(merchant);
+        Assert.NotNull(merchant.Merchant);
+
+        await client.DeleteMerchant(merchant.Merchant.Code);
     }
 
     [Fact]
@@ -73,5 +76,32 @@ public class Merchants
         var merchant = await client.GetMerchant(merchants.Merchants.First().Code!);
         Assert.NotNull(merchant);
         Assert.Equal(merchants.Merchants.First().Code, merchant.Code);
+    }
+
+    [Fact]
+    public async Task GetMerchant()
+    {
+	    var client = TestHelper.CreateClientV2();
+
+	    var merchants = await client.GetMerchant("M-3421-2120");
+	    Assert.NotNull(merchants);
+	    Assert.NotNull(merchants.Code);
+    }
+
+    [Fact]
+    public async Task GetMerchantDetailed()
+    {
+	    var client = TestHelper.CreateClientV2();
+
+	    var merchants = await client.GetMerchantDetailed("M-3421-2120");
+	    Assert.NotNull(merchants);
+	    Assert.NotNull(merchants.Code);
+    }
+
+    [Fact(Skip="First need referral Profile Code")]
+    public async Task UpdateMerchantPackage()
+    {
+	    var client = TestHelper.CreateClientV2();
+	    await client.UpdateMerchantPackage("M-3421-2120", "");
     }
 }
