@@ -49,6 +49,8 @@ public class PayV2Client : PayV2ClientBase, IPayV2Client
 
     public Task<FlexibleDirectDebitResponse> CreateFlexibleDirectDebit(FlexibleDirectDebitRequest body, string? baseurl = "https://rest-api.pay.nl/v3/") => _httpClient.PostAsync<FlexibleDirectDebitResponse>($"{baseurl}DirectDebit/mandateDebit/json", body)!;
 
+    public Task<GetMandateResponse> GetMandate(string mandateId, string? baseurl = "https://rest-api.pay.nl/v3/") => _httpClient.GetAsync<GetMandateResponse>($"{baseurl}DirectDebit/info/json?mandateId={mandateId}")!;
+
     public Task<DirectDebitResponse> CreateDirectDebit(string incassoOrderId, CreateDirectDebitRequest body) => _httpClient.PostAsync<DirectDebitResponse>($"directdebits/{incassoOrderId}/debits", body)!;
 
     public Task<DirectDebitResponse> GetDirectDebit(string incassoOrderId) => _httpClient.GetAsync<DirectDebitResponse>($"directdebits/{incassoOrderId}")!;
