@@ -1,6 +1,6 @@
 using System.Web;
 
-namespace PayNlSdk.Sdk.Utilities;
+namespace PayNlSdk.Sdk.Utilities.QueryFilterExtensions;
 
 public abstract class QueryParamFilter<T> where T : QueryParamFilter<T>
 {

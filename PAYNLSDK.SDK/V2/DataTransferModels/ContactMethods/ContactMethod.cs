@@ -32,7 +32,6 @@ public class ContactMethod
 	/// <summary>
 	///	Does the contact method needs to receive notifications
 	/// </summary>
-
 	[JsonPropertyName("notifications")]
 	public bool Notifications { get; set; }
 }

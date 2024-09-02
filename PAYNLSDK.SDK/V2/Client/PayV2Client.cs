@@ -1,5 +1,6 @@
 using System.Net;
 using PayNlSdk.Sdk.Utilities;
+using PayNlSdk.Sdk.Utilities.QueryFilterExtensions;
 using PayNlSdk.Sdk.V2.DataTransferModels.Authentication;
 using PayNlSdk.Sdk.V2.DataTransferModels.Authentication.AuthenticationTokens;
 using PayNlSdk.Sdk.V2.DataTransferModels.ClearingAccounts;

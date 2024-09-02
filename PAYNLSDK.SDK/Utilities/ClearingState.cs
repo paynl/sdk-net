@@ -2,7 +2,7 @@ namespace PayNlSdk.Sdk.Utilities;
 
 public enum ClearingState
 {
-	Processed,
-	Cleared,
-	Settled,
+	Processed = 1,
+	Cleared = 2,
+	Settled = 3,
 }

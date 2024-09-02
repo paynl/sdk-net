@@ -7,7 +7,7 @@ public class FlexibleDirectDebitRequest
 	/// <summary>
 	/// The Id received from the create mandate end point.
 	/// </summary>
-	[JsonPropertyName("MandateId")]
+	[JsonPropertyName("mandateId")]
 	public string? MandateId { get; set; }
 
 	/// <summary>

@@ -1,4 +1,4 @@
-namespace PayNlSdk.Sdk.Utilities;
+namespace PayNlSdk.Sdk.Utilities.QueryFilterExtensions;
 
 /// <summary>
 /// Used to build the query parameters for ClearingLines endpoint.

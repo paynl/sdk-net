@@ -1,5 +1,6 @@
 using PayNlSdk.IntegrationTests.Helpers;
 using PayNlSdk.Sdk.Utilities;
+using PayNlSdk.Sdk.Utilities.QueryFilterExtensions;
 
 namespace PayNlSdk.IntegrationTests.V2;
 

@@ -1,4 +1,4 @@
-namespace PayNlSdk.Sdk.Utilities;
+namespace PayNlSdk.Sdk.Utilities.QueryFilterExtensions;
 
 public class InvoiceLineFilter : QueryParamFilter<InvoiceLineFilter>
 {

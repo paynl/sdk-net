@@ -2,8 +2,8 @@ namespace PayNlSdk.Sdk.Utilities;
 
 public enum InvoiceState
 {
-	Processed,
-	Open,
-	Payable,
-	Paid
+	Processed = 1,
+	Open = 2,
+	Payable = 3,
+	Paid = 4
 }
