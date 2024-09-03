@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using PayNlSdk.Sdk.Utilities;
 
 namespace PayNlSdk.Sdk.V2.DataTransferModels.DirectDebit;
 
@@ -50,13 +51,15 @@ public class MandateDirectDebitInfoResponse
 	///  The date the order was sent to the bank.
 	/// </summary>
 	[JsonPropertyName("sendDate")]
-	public string? SendDate { get; set; }
+	[JsonConverter(typeof(DateOnlyConverter))]
+	public DateTime? SendDate { get; set; }
 
 	/// <summary>
 	///  The date the amount was received.
 	/// </summary>
 	[JsonPropertyName("receiveDate")]
-	public string? ReceiveDate { get; set; }
+	[JsonConverter(typeof(DateOnlyConverter))]
+	public DateTime? ReceiveDate { get; set; }
 
 	/// <summary>
 	///  91: Added.
@@ -70,7 +73,8 @@ public class MandateDirectDebitInfoResponse
 	///  199: Relist
 	/// </summary>
 	[JsonPropertyName("statusCode")]
-	public string? StatusCode { get; set; }
+	[JsonConverter(typeof(GenericEnumConverter<MandateStatusCode>))]
+	public MandateStatusCode? StatusCode { get; set; }
 
 	[JsonPropertyName("statusName")]
 	public string? StatusName { get; set; }
@@ -90,7 +94,8 @@ public class MandateDirectDebitInfoResponse
 	///  331: Report wrongful debit
 	/// </summary>
 	[JsonPropertyName("declineCode")]
-	public string? DeclineCode { get; set; }
+	[JsonConverter(typeof(GenericEnumConverter<MandateDeclineCode>))]
+	public MandateDeclineCode? DeclineCode { get; set; }
 
 	[JsonPropertyName("declineName")]
 	public string? DeclineName { get; set; }
@@ -99,5 +104,6 @@ public class MandateDirectDebitInfoResponse
 	///  The date the amount was declined
 	/// </summary>
 	[JsonPropertyName("declineDate")]
-	public string? DeclineDate { get; set; }
+	[JsonConverter(typeof(DateOnlyConverter))]
+	public DateTime? DeclineDate { get; set; }
 }

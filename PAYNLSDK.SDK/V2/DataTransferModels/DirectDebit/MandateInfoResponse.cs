@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using PayNlSdk.Sdk.Utilities;
 using PayNlSdk.Sdk.V2.DataTransferModels.Transaction;
 
 namespace PayNlSdk.Sdk.V2.DataTransferModels.DirectDebit;
@@ -57,7 +58,8 @@ public class MandateInfoResponse : Stats
 	///  1 : Week, 2 : Month, 3: Quarter, 4 : Half year, 5:Year, 6: Day, 7: Manual
 	/// </summary>
 	[JsonPropertyName("intervalPeriod")]
-	public string? IntervalPeriod { get; set; }
+	[JsonConverter(typeof(GenericEnumConverter<MandateIntervalPeriod>))]
+	public MandateIntervalPeriod? IntervalPeriod { get; set; }
 
 	/// <summary>
 	/// The number of times this order can be executed in the future.
