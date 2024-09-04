@@ -91,7 +91,7 @@ var debitOrderId = debitOrder.DebitOrderId;
 ### Unit Tests
 
 In order run the unit tests the following environment variables needs too be set up:
-| Variable                    | Version Support                                             |
+| Variable                    | Value                                             |
 |-----------------------------|-------------------------------------------------------------|
 | PAY_APIKEY                  | Your pay API Token from the pay dashboard                   |
 | PAY_AT                      | AT code of the API Token (AT-1234-1234)                     |
