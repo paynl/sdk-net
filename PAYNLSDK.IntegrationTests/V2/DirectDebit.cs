@@ -7,7 +7,7 @@ namespace PayNlSdk.IntegrationTests.V2;
 
 public class DirectDebit
 {
-	private const string MandateId = "IO-7149-8438-0752";
+	private static readonly string s_mandateId = Environment.GetEnvironmentVariable("PAY_MANDATEID")!;
 
 	[Fact]
 	public async Task CreateDirectDebitOrderSingle()
@@ -24,9 +24,9 @@ public class DirectDebit
 			{
 				BankAccount = new PaymentBankAccount
 				{
-					Iban = "NL42INGB0000000000",
+					Iban = Environment.GetEnvironmentVariable("PAY_BANKACCOUNTNUMBER"),
 					Bic = "INGBNL2A",
-					Owner = "Test Owner"
+					Owner = Environment.GetEnvironmentVariable("PAY_BANKACCOUNTHOLDER")
 				}
 			}
 		});
@@ -52,9 +52,9 @@ public class DirectDebit
 			{
 				BankAccount = new PaymentBankAccount
 				{
-					Iban = "NL42INGB0000000000",
+					Iban = Environment.GetEnvironmentVariable("PAY_BANKACCOUNTNUMBER"),
 					Bic = "INGBNL2A",
-					Owner = "Test"
+					Owner = Environment.GetEnvironmentVariable("PAY_BANKACCOUNTHOLDER")
 				}
 			},
 			Interval = new Interval()
@@ -74,7 +74,7 @@ public class DirectDebit
 	public async Task GetDirectDebit()
 	{
 		var client = TestHelper.CreateClientV2();
-		var order = await client.GetDirectDebit(MandateId);
+		var order = await client.GetDirectDebit(s_mandateId);
 
 		Assert.NotNull(order);
 		Assert.NotNull(order.Mandate?.Id);
@@ -85,7 +85,7 @@ public class DirectDebit
 	public async Task PatchDirectDebit()
 	{
 		var client = TestHelper.CreateClientV2();
-		var ddo = await client.UpdateDirectDebit(MandateId,new UpdateDirectDebitRequest
+		var ddo = await client.UpdateDirectDebit(s_mandateId,new UpdateDirectDebitRequest
 		{
 			Amount = new Amount
 			{
@@ -95,9 +95,9 @@ public class DirectDebit
 			{
 				BankAccount = new PaymentBankAccount
 				{
-					Iban = "NL42INGB0000000000",
+					Iban = Environment.GetEnvironmentVariable("PAY_BANKACCOUNTNUMBER"),
 					Bic = "INGBNL2A",
-					Owner = "Test "
+					Owner = Environment.GetEnvironmentVariable("PAY_BANKACCOUNTHOLDER")
 				}
 			}
 		});
@@ -112,9 +112,9 @@ public class DirectDebit
 	{
 		var client = TestHelper.CreateClientV2();
 		// Should not throw any exception on first delete
-		await client.DeleteDirectDebit(MandateId);
+		await client.DeleteDirectDebit(s_mandateId);
 		// Should throw 404 on second delete
-		await Assert.ThrowsAsync<PayNlSdkException>(() => client.DeleteDirectDebit(MandateId));
+		await Assert.ThrowsAsync<PayNlSdkException>(() => client.DeleteDirectDebit(s_mandateId));
 	}
 
     [Fact]
@@ -122,7 +122,7 @@ public class DirectDebit
     {
         var client = TestHelper.CreateClientV2();
 
-        var dd = await client.CreateDirectDebit(MandateId, new CreateDirectDebitRequest
+        var dd = await client.CreateDirectDebit(s_mandateId, new CreateDirectDebitRequest
         {
             Amount = new Amount
             {
@@ -159,7 +159,7 @@ public class DirectDebit
 	    var client = TestHelper.CreateClientV2();
 	    var test = await client.CreateFlexibleDirectDebit(new FlexibleDirectDebitRequest
 	    {
-		    MandateId = MandateId,
+		    MandateId = s_mandateId,
 		    Amount = 1,
 		    ProcessDate = DateTime.Now.ToString("dd-MM-yyyy"),
 		    Description = "Test run",
@@ -173,9 +173,9 @@ public class DirectDebit
     public async Task GetMandate()
     {
 	    var client = TestHelper.CreateClientV2();
-	    var test = await client.GetMandate(MandateId);
+	    var test = await client.GetMandate(s_mandateId);
 
 	    Assert.NotNull(test.Response?.Mandate);
-	    Assert.Equal(MandateId, test.Response?.Mandate?.MandateId);
+	    Assert.Equal(s_mandateId, test.Response?.Mandate?.MandateId);
     }
 }

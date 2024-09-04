@@ -53,6 +53,53 @@ var trxStatus = await client.GetTransactionInfo(transactionResponse.Id);
 var paid = trxStatus.AmountPaid.Value == trxStatus.Amount.Value;
 ```
 
+### Flexible debit order
+
+To start a flexible debit order first create a mandate:
+```c#
+var mandate = await client.CreateMandate(new CreateMandateRequest
+    {
+        ServiceId = "SL-1234-1234",
+        Amount= 1,
+        Bankaccountholder = "John Doe",
+        ProcessDate = "dd-MM-yyyy",
+        Description = "Create Mandate",
+        BankaccountNumber = "NL42INGB0000000000"
+    });
+var mandateId = mandate.MandateId;
+```
+
+The mandate first needs to be processed, use the below service too check the status of the mandate (`MandateStatusCode` should be `Processed`):
+```c#
+var mandate = await client.GetMandate("IO-1234-1234-1234");
+```
+
+Once processed you can start a flexible debit order using the below service:
+```c#
+var debitOrder = await client.CreateFlexibleDirectDebit(new FlexibleDirectDebitRequest
+{
+    MandateId = "IO-1234-1234-1234",
+    Amount = 1,
+    ProcessDate = "dd-MM-yyyy",
+    Description = "Create debit order",
+    Last = false,
+});
+
+var debitOrderId = debitOrder.DebitOrderId;
+```
+
+### Unit Tests
+
+In order run the unit tests the following environment variables needs too be set up:
+| Variable                    | Version Support                                             |
+|-----------------------------|-------------------------------------------------------------|
+| PAY_APIKEY                  | Your pay API Token from the pay dashboard                   |
+| PAY_AT                      | AT code of the API Token (AT-1234-1234)                     |
+| PAY_SERVICEID               | Service location code                                       |
+| PAY_MANDATEID               | Mandate code used for direct debit orders                   |
+| PAY_BANKACCOUNTNUMBER       | Iban number used for clearing and diriect debit order tests |
+| PAY_BANKACCOUNTHOLDER       | Account holder of the above Iban                            |
+
 ### Supported platforms
 This library is built using .NET standard 2.1. This means that the package supports the following .NET implementations:
 | Framework                   | Version Support |
@@ -93,10 +140,10 @@ Source: https://docs.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-s
     - [x] List    
     - [x] Update
     - [x] Request review 
-    - [ ] Clearings
-    - [ ] Invoices
-    - [ ] Update package
-    - [ ] Undelete
+    - [x] Clearings
+    - [x] Invoices
+    - [x] Update package
+    - [x] Undelete
 - [x] Packages
 - [x] Get available payment methods
 - [x] Get services
