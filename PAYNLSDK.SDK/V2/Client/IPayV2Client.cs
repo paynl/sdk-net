@@ -49,6 +49,11 @@ public interface IPayV2Client
     Task<FlexibleDirectDebitResponse> CreateFlexibleDirectDebit(FlexibleDirectDebitRequest body, string? baseurl = "https://rest-api.pay.nl/v3/");
 
     /// <summary>
+    /// Gets the status of the mandate
+    /// </summary>
+    Task<GetMandateResponse> GetMandate(string mandateId, string? baseurl = "https://rest-api.pay.nl/v3/");
+
+    /// <summary>
     ///     Create a recurring debit.
     /// </summary>
     Task<DirectDebitResponse> CreateDirectDebit(string incassoOrderId, CreateDirectDebitRequest body);
