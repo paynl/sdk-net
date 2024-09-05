@@ -6,7 +6,7 @@
         <LangVersion>11</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>PayNL.Sdk</PackageId>
-        <Version>3.3.0.0</Version>
+        <Version>3.3.0.1</Version>
         <Title>PayNL Sdk</Title>
         <Authors>Scenius</Authors>
         <Description>Pay.nl Sdk for .NET</Description>
