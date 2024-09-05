@@ -20,6 +20,9 @@ public class V3OrderPayment
 	[JsonPropertyName("customerId")]
 	public string CustomerId { get; set; }
 
+	[JsonPropertyName("customerName")]
+	public string CustomerName { get; set; }
+
 	[JsonPropertyName("ipAddress")]
 	public string IpAddress { get; set; }
 
