@@ -38,8 +38,6 @@ internal class PayHttpClient
             content = new StringContent(Json.Serialize(body), Encoding.UTF8, "application/json");
         }
 
-        var test = Json.Serialize(body);
-
         var response = await _client.PostAsync(url, content);
         await CallCallback(response);
 
