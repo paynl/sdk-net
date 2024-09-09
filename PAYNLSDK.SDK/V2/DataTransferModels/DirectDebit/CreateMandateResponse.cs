@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using PayNlSdk.Sdk.V2.Idin.Responses;
 
 namespace PayNlSdk.Sdk.V2.DataTransferModels.DirectDebit;
 
@@ -9,4 +10,7 @@ public class CreateMandateResponse
 	/// </summary>
 	[JsonPropertyName("result")]
 	public string? MandateId { get; set; }
+
+	[JsonPropertyName("request")]
+	public Request? Request { get; set; }
 }
