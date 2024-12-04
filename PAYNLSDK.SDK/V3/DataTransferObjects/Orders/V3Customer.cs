@@ -13,7 +13,7 @@ public class V3Customer
 	[JsonPropertyName("lastname")]
 	public string Lastname { get; set; }
 
-	[JsonPropertyName("dateOfBirth")]
+	[JsonPropertyName("birthDate")]
 	public DateTime DateOfBirth { get; set; }
 
 	[JsonPropertyName("gender")]

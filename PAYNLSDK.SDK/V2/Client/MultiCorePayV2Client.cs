@@ -38,17 +38,25 @@ public class MultiCorePayV2Client : PayV2ClientBase
     {
         if (!IsInitialized)
         {
-            var response = _httpClient
-                .GetAsync<GetConfigResponse>($"{DefaultCore.Url}/services/config?serviceId={ServiceId}").Result;
+	        try
+	        {
+		        var response = _httpClient
+			        .GetAsync<GetConfigResponse>($"{DefaultCore.Url}/services/config?serviceId={ServiceId}").Result;
 
-            if (response?.TguList == null)
-            {
-                throw new PayNlSdkException("Unable to retrieve available cores from PAY");
-            }
+		        if (response?.TguList == null)
+		        {
+			        throw new PayNlSdkException("Unable to retrieve available cores from PAY");
+		        }
 
-            var coresList = response.TguList.OrderBy(x => x.Id).Select(c =>
-                new Core(new Uri($"https://rest.{c.Domain!}/v2/"), c.Domain!, c.Status == "ACTIVE")).ToList();
-            AvailableCores = coresList;
+		        var coresList = response.TguList.OrderBy(x => x.Id).Select(c =>
+			        new Core(new Uri($"https://rest.{c.Domain!}/v2/"), c.Domain!, c.Status == "ACTIVE")).ToList();
+		        AvailableCores = coresList;
+	        }
+	        catch (Exception e)
+	        {
+		        Console.WriteLine(e);
+		        Console.WriteLine("Failed to initialize multicore client. Falling back to default core.");
+	        }
         }
 
         IsInitialized = true;

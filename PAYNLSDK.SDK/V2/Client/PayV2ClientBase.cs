@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using PayNlSdk.Sdk.Utilities;
@@ -11,10 +12,10 @@ public abstract class PayV2ClientBase : IDisposable
     private string At { get; }
     private string ApiSecret { get; }
 
-    protected virtual string ClientVersion => "1.0.0.0";
+    protected virtual string ClientVersion => Assembly.GetExecutingAssembly().GetName().Version.ToString();
     private string UserAgent => $"PAYNL-Sdk/{ClientVersion} (DotNet)";
 
-    protected virtual Core DefaultCore => new Core(new Uri("https://rest.pay.nl/v2/"), "Pay.nl (Default)");
+    protected virtual Core DefaultCore => new(new Uri("https://rest.pay.nl/v2/"), "Pay.nl (Default)");
     public static Core s_DefaultCore;
     internal readonly PayHttpClient  _httpClient;
     private readonly HttpClient _backingHttpClient;

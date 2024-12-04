@@ -17,11 +17,6 @@ internal class MultiCoreRequester
 
 	internal async Task<TResponse> ExecuteWithAutomaticCoreSwitching<TResponse>(Func<Task<TResponse>> apiFunction)
 	{
-		if (!MultiCorePayV2Client.IsInitialized)
-		{
-			throw new MutliCoreUninitializedException();
-		}
-
 		try
 		{
 			if (!MultiCorePayV2Client.AvailableCores[_v2Client.ActiveEndpointIndex].IsHealthy)
