@@ -10,7 +10,4 @@ public class V3PaymentMethod
 
 	[JsonPropertyName("id")]
 	public int? Id { get; set; }
-
-	[JsonPropertyName("optimize")]
-	public List<string>? Optimize { get; set; }
 }

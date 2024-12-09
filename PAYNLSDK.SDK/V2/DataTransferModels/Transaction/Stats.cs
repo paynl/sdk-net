@@ -24,4 +24,7 @@ public class Stats
 
     [JsonPropertyName("domainId")]
     public string? DomainId { get; set; } // The ID of the duplicate content URL.
+
+    [JsonPropertyName("promotorId")]
+    public int? PromotorId { get; set; } // The ID of the promotor.
 }

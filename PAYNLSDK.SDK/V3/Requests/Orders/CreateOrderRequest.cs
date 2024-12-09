@@ -13,6 +13,9 @@ public class CreateOrderRequest
 	[JsonPropertyName("paymentMethod")]
 	public V3PaymentMethod? PaymentMethod { get; set; }
 
+	[JsonPropertyName("optimize")]
+	public V3Optimize? Optimize { get; set; }
+
 	[JsonPropertyName("integration")]
 	public Integration? Integration { get; set; }
 

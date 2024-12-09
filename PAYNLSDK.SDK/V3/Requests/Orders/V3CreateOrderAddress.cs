@@ -5,10 +5,10 @@ namespace PayNlSdk.Sdk.V3.Requests.Orders;
 public class V3CreateOrderAddress
 {
 	[JsonPropertyName("firstName")]
-	public string FirstName { get; set; }
+	public string? FirstName { get; set; }
 
 	[JsonPropertyName("lastName")]
-	public string LastName { get; set; }
+	public string? LastName { get; set; }
 
 	[JsonPropertyName("street")]
 	public string Street { get; set; }
@@ -22,6 +22,8 @@ public class V3CreateOrderAddress
 	[JsonPropertyName("zipCode")]
 	public string ZipCode { get; set; }
 
+	[JsonPropertyName("city")]
+    public string City { get; set; }
 	/// <summary>
 	/// 2 character long country code, e.g. NL for Netherlands.
 	/// </summary>

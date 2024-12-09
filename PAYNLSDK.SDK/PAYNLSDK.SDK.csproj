@@ -6,13 +6,13 @@
         <LangVersion>11</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>PayNL.Sdk</PackageId>
-        <Version>3.3.0.4</Version>
+        <Version>3.3.1.1</Version>
         <Title>PayNL Sdk</Title>
         <Authors>Scenius</Authors>
-        <Description>Pay.nl Sdk for .NET</Description>
-        <Copyright>Copyright 2016-2024</Copyright>
+        <Description>Pay.nl SDK for .NET</Description>
+        <Copyright>Copyright 2016-2025</Copyright>
         <PackageTags>pay.nl payments pay paynl</PackageTags>
-        <PackageReleaseNotes>Fixed bugs on capture order endpoint</PackageReleaseNotes>
+        <PackageReleaseNotes>Fixed bugs on create order endpoint</PackageReleaseNotes>
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="System.Text.Json" Version="8.0.1" />

@@ -5,31 +5,34 @@ namespace PayNlSdk.Sdk.V3.DataTransferObjects.Orders;
 public class V3Customer
 {
 	[JsonPropertyName("email")]
-	public string Email { get; set; }
+	public string? Email { get; set; }
 
 	[JsonPropertyName("firstname")]
-	public string Firstname { get; set; }
+	public string? Firstname { get; set; }
 
 	[JsonPropertyName("lastname")]
-	public string Lastname { get; set; }
+	public string? Lastname { get; set; }
 
 	[JsonPropertyName("birthDate")]
-	public DateTime DateOfBirth { get; set; }
+	public DateTime? DateOfBirth { get; set; }
 
 	[JsonPropertyName("gender")]
-	public string Gender { get; set; }
+	public string? Gender { get; set; }
 
 	[JsonPropertyName("phone")]
-	public string Phone { get; set; }
+	public string? Phone { get; set; }
 
 	[JsonPropertyName("locale")]
-	public string Locale { get; set; }
+	public string? Locale { get; set; }
 
 	[JsonPropertyName("ipAddress")]
-	public string IpAddress { get; set; }
+	public string? IpAddress { get; set; }
 
 	[JsonPropertyName("reference")]
-	public string Reference { get; set; }
+	public string? Reference { get; set; }
+
+	[JsonPropertyName("gaClientId")]
+	public string? GaClientId { get; set; }
 
 	[JsonPropertyName("company")]
 	public V3Company Company { get; set; }
