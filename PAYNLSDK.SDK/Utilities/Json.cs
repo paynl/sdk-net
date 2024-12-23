@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using PayNlSdk.Sdk.V2.DataTransferModels.DirectDebit;
 
 namespace PayNlSdk.Sdk.Utilities;
 
@@ -8,7 +9,7 @@ public class Json
     private static readonly JsonSerializerOptions? SerializerOptions = new()
     {
         WriteIndented = true,
-        Converters = { new DateOnlyConverter() },
+        Converters = { new DateOnlyConverter(), new EmptyStringToListConverterFactory() },
         NumberHandling = JsonNumberHandling.AllowReadingFromString,
     };
 
