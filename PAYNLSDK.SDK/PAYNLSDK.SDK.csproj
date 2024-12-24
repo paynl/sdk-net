@@ -6,16 +6,16 @@
         <LangVersion>11</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>PayNL.Sdk</PackageId>
-        <Version>3.3.2.0</Version>
+        <Version>3.3.3.0</Version>
         <Title>PayNL Sdk</Title>
         <Authors>Scenius</Authors>
         <Description>Pay.nl SDK for .NET</Description>
         <Copyright>Copyright 2016-2025</Copyright>
         <PackageTags>pay.nl payments pay paynl</PackageTags>
-        <PackageReleaseNotes>Parse inconsistent types</PackageReleaseNotes>
+        <PackageReleaseNotes>Parse incomplete iDIN responses</PackageReleaseNotes>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="System.Text.Json" Version="8.0.1" />
+      <PackageReference Include="System.Text.Json" Version="9.0.0" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="V2\" />
