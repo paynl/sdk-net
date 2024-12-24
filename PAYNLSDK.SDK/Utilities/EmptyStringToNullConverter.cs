@@ -20,5 +20,14 @@ public class EmptyStringToNullConverter<T>  : JsonConverter<T> where T : class
 		return JsonSerializer.Deserialize<T>(ref reader, options);
 	}
 
-	public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options) => throw new NotImplementedException();
+	public override void Write(Utf8JsonWriter writer, T? value, JsonSerializerOptions options)
+	{
+		if (value == null)
+        {
+            writer.WriteNullValue();
+            return;
+        }
+
+        JsonSerializer.Serialize(writer, value, value.GetType(), options);
+	}
 }
