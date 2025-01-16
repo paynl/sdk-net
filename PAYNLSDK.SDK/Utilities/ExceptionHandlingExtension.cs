@@ -15,27 +15,29 @@ internal static class ExceptionHandlingExtension
 
         switch ((int)response.StatusCode)
         {
-            case (int)HttpStatusCode.Unauthorized when response.Content != null:
             case (int)HttpStatusCode.NotFound when response.Content != null:
             case (int)HttpStatusCode.MethodNotAllowed when response.Content != null:
             case (int)HttpStatusCode.BadRequest when response.Content != null:
 	        case 422 when response.Content != null:
-                try
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    var error = JsonSerializer.Deserialize<ApiError>(content);
-                    if (error != null)
-                    {
-                        throw new PayNlSdkException(error);
-                    }
-                    var body = string.IsNullOrWhiteSpace(content) ? string.Empty : $", Response body: {content}";
-                    throw new PayNlSdkException($"Unknown error for {response.StatusCode} when calling {response.RequestMessage.RequestUri.AbsoluteUri}{body}");
-                }
-                catch (JsonException ex1)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    throw new PayNlSdkException($"Unknown error for {response.StatusCode}, Response body: {content}", ex1);
-                }
+		        try
+		        {
+			        var content = await response.Content.ReadAsStringAsync();
+			        var error = JsonSerializer.Deserialize<ApiError>(content);
+			        if (error != null)
+			        {
+				        throw new PayNlSdkException(error);
+			        }
+
+			        var body = string.IsNullOrWhiteSpace(content) ? string.Empty : $", Response body: {content}";
+			        throw new PayNlSdkException($"Unknown error for {response.StatusCode} when calling {response.RequestMessage.RequestUri.AbsoluteUri}{body}");
+		        }
+		        catch (JsonException)
+		        {
+			        var content = await response.Content.ReadAsStringAsync() ?? "No body provided in response";
+			        throw new PayNlSdkException($"Unknown error for {response.StatusCode}, Response body: {content}");
+		        }
+	        case (int)HttpStatusCode.Unauthorized:
+				throw new PayNlSdkUnauthorizedException("Unauthorized");
             case (int)HttpStatusCode.InternalServerError:
             case (int)HttpStatusCode.NotImplemented:
             case (int)HttpStatusCode.BadGateway:
