@@ -1,6 +1,8 @@
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using PayNlSdk.Sdk.V2.DataTransferModels;
+using PayNlSdk.Sdk.V2.Idin.Responses;
 
 namespace PayNlSdk.Sdk.Utilities;
 
@@ -20,7 +22,7 @@ internal class PayHttpClient
         var response = await GetAsyncNoExceptionHandling(url);
         await response.HandleException();
         var result = await response.Content.ReadAsStreamAsync();
-        return await JsonSerializer.DeserializeAsync<T>(result);
+        return await Deserialize<T>(result);
     }
 
     internal async Task<HttpResponseMessage> GetAsyncNoExceptionHandling(string url)
@@ -43,7 +45,7 @@ internal class PayHttpClient
 
         await response.HandleException();
         var result = await response.Content.ReadAsStreamAsync();
-        return await Json.DeserializeAsync<T>(result);
+        return await Deserialize<T>(result);
     }
 
     internal async Task<T?> PostUrlEncodedAsync<T>(string url, Dictionary<string, string> body)
@@ -57,14 +59,14 @@ internal class PayHttpClient
 
         await response.HandleException();
         var result = await response.Content.ReadAsStreamAsync();
-        return await Json.DeserializeAsync<T>(result);
+        return await Deserialize<T>(result);
     }
 
     internal async Task<T?> PatchAsync<T>(string url, object? body = null)
     {
         var response = await PatchAsync(url, body);
         var result = await response.Content.ReadAsStreamAsync();
-        return await Json.DeserializeAsync<T>(result);
+        return await Deserialize<T>(result);
     }
 
     internal async Task<HttpResponseMessage> PatchAsync(string url, object? body = null)
@@ -107,5 +109,29 @@ internal class PayHttpClient
             StatusCode = (int)message.StatusCode
         };
         _onRequest(log);
+    }
+
+
+    private async Task<T?> Deserialize<T>(Stream result)
+    {
+	    try
+	    {
+		    return await Json.DeserializeAsync<T>(result);
+	    }
+	    catch (Exception)
+	    {
+		    var error = await Json.DeserializeAsync<IdinErrorResponse>(result);
+		    if (error?.Request != null)
+		    {
+			    throw new PayNlSdkException(new ApiError()
+			    {
+				    Detail = error.Request.ErrorMessage,
+				    Title = error.Request.ErrorId,
+				    Type = error.Request.Result,
+			    });
+		    }
+
+		    throw;
+	    }
     }
 }
