@@ -14,7 +14,7 @@ public class SuccessfulRefundResponse
     public string? Description { get; set; }
 
     [JsonPropertyName("processDate")]
-    public DateTime ProcessDate { get; set; }
+    public DateTime? ProcessDate { get; set; }
 
     [JsonPropertyName("amount")]
     public Amount? Amount { get; set; }
