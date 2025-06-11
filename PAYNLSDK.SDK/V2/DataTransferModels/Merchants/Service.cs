@@ -4,11 +4,17 @@ namespace PayNlSdk.Sdk.V2.DataTransferModels.Merchants;
 
 public class Service
 {
+	[JsonPropertyName("code")]
+	public string? Code { get; set; }
+
     [JsonPropertyName("name")]
     public string? Name { get; set; }
 
     [JsonPropertyName("description")]
     public string? Description { get; set; }
+
+    [JsonPropertyName("testMode")]
+    public bool? TestMode { get; set; }
 
     [JsonPropertyName("categoryCode")]
     public string? CategoryCode { get; set; }

@@ -4,21 +4,31 @@ namespace PayNlSdk.Sdk.V2.DataTransferModels.Services;
 
 public class Service
 {
-    [JsonPropertyName("id")]
-    public string? Id { get; set; }
+	/// <summary>
+	/// Legacy API support
+	/// </summary>
+	public string? Id => Code;
 
-    [JsonPropertyName("name")]
-    public string? Name { get; set; }
+	/// <summary>
+	/// Legacy API support
+	/// </summary>
+	public int? TestMode => TestModeBool.HasValue ? TestModeBool.Value ? 1 : 0 : null;
 
-    [JsonPropertyName("description")]
-    public string? Description { get; set; }
+	[JsonPropertyName("code")]
+	public string? Code { get; set; }
 
-    [JsonPropertyName("testMode")]
-    public int? TestMode { get; set; }
+	[JsonPropertyName("name")]
+	public string? Name { get; set; }
 
-    [JsonPropertyName("secret")]
-    public string? Secret { get; set; }
+	[JsonPropertyName("description")]
+	public string? Description { get; set; }
 
-    [JsonPropertyName("createdAt")]
-    public DateTime CreatedAt { get; set; }
+	[JsonPropertyName("testMode")]
+	public bool? TestModeBool { get; set; }
+
+	[JsonPropertyName("secret")]
+	public string? Secret { get; set; }
+
+	[JsonPropertyName("createdAt")]
+	public DateTime CreatedAt { get; set; }
 }

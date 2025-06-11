@@ -21,5 +21,8 @@ public class CustomHttpClientHandler : HttpClientHandler
         return await base.SendAsync(request, cancellationToken);
     }
 
-    private static bool IsDomainBlocked(Uri uri) => BlockedDomains.Any(blockedDomain => uri.Host.EndsWith(blockedDomain, StringComparison.OrdinalIgnoreCase));
+    private static bool IsDomainBlocked(Uri uri)
+    {
+	    return BlockedDomains.Any(blockedDomain => uri.Host.EndsWith(blockedDomain, StringComparison.OrdinalIgnoreCase));
+    }
 }

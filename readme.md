@@ -172,6 +172,15 @@ Source: https://docs.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-s
     - [x] Decline
 - [ ] Remainder of the documented API
 
+
+### Development
+
+In order to run the integration tests, some secrets need to be provided.
+```
+dotnet user-secrets set "PAY_APIKEY" "your-api-key-here"
+dotnet user-secrets set "PAY_AT" "your-at-token-here"
+dotnet user-secrets set "PAY_SERVICEID" "your-service-id-here"
+```
 ### License
 
 The Assembly is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
