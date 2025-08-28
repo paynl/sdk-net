@@ -6,13 +6,13 @@
         <LangVersion>11</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>PayNL.Sdk</PackageId>
-        <Version>3.3.5</Version>
+        <Version>3.3.6</Version>
         <Title>PayNL Sdk</Title>
         <Authors>Scenius</Authors>
         <Description>Pay.nl SDK for .NET</Description>
         <Copyright>Copyright 2016-2025</Copyright>
         <PackageTags>pay.nl payments pay paynl</PackageTags>
-        <PackageReleaseNotes>Allow NULL on refunds</PackageReleaseNotes>
+        <PackageReleaseNotes>Change PAY. Base url</PackageReleaseNotes>
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="System.Text.Json" Version="9.0.0" />

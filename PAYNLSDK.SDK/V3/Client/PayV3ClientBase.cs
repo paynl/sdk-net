@@ -10,5 +10,5 @@ public class PayV3ClientBase : PayV2ClientBase
 	}
 
 	protected override string ClientVersion => "2.0.0.0";
-	protected override Core DefaultCore => new (new Uri("https://connect.payments.nl/v1/"), "Pay.nl (Default)");
+	protected override Core DefaultCore => new (new Uri("https://connect.pay.nl/v1/"), "Pay.nl (Default)");
 }
