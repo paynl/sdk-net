@@ -37,7 +37,7 @@ public class V3Order
         public string Receipt { get; set; }
 
         [JsonPropertyName("integration")]
-        public Integration Integration { get; set; }
+        public V3OrderIntegration Integration { get; set; }
 
         [JsonPropertyName("amount")]
         public Amount Amount { get; set; }
