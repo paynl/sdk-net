@@ -9,7 +9,7 @@ public class Json
     private static readonly JsonSerializerOptions? SerializerOptions = new()
     {
         WriteIndented = true,
-        Converters = { new DateOnlyConverter(), new EmptyStringToListConverterFactory() },
+        Converters = { new EmptyStringToListConverterFactory() },
         NumberHandling = JsonNumberHandling.AllowReadingFromString,
     };
 

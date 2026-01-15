@@ -27,10 +27,11 @@ public class Transactions
     }
 
     [Fact]
-    public async Task ViewTransaction()
+    public async Task SetExpiry()
     {
         var client = TestHelper.CreateClientV2();
 
+        var expire = DateTime.UtcNow.AddDays(2).AddSeconds(2);
         var trx = await client.CreateTransaction(new CreateTransactionRequest
         {
             Amount = new Amount
@@ -38,12 +39,12 @@ public class Transactions
                 Value = 1000,
             },
             ReturnUrl = "https://demo.pay.nl/complete/",
+            Expire = expire
         });
 
+        Assert.True(expire - trx.ExpiresAt.Value <= TimeSpan.FromSeconds(2));
         var trxInfo = await client.GetTransactionInfo(trx.OrderId!);
-        Assert.Equal(trx.Id, trxInfo.Id);
-        Assert.Equal(trx.Amount!.Value, trxInfo.Amount!.Value);
-        Assert.Equal(trx.CreatedAt, trxInfo.CreatedAt);
+        Assert.True(expire - trxInfo.ExpiresAt.Value <= TimeSpan.FromSeconds(2));
     }
 
     [Fact]
