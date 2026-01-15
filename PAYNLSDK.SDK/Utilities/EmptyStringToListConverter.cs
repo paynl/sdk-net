@@ -21,6 +21,16 @@ public class EmptyStringToListConverter<T> : JsonConverter<List<T>>
 		var newOptions = new JsonSerializerOptions(options);
 		newOptions.Converters.Remove(this);
 
+		// Also remove the factory to prevent it from creating new converters for nested lists
+		for (int i = newOptions.Converters.Count - 1; i >= 0; i--)
+		{
+			if (newOptions.Converters[i] is EmptyStringToListConverterFactory)
+			{
+				newOptions.Converters.RemoveAt(i);
+				break;
+			}
+		}
+
 		while (reader.Read())
 		{
 			if (reader.TokenType == JsonTokenType.EndArray)
@@ -39,6 +49,17 @@ public class EmptyStringToListConverter<T> : JsonConverter<List<T>>
 	{
 		var newOptions = new JsonSerializerOptions(options);
 		newOptions.Converters.Remove(this);
+
+		// Also remove the factory to prevent it from creating new converters for nested lists
+		for (int i = newOptions.Converters.Count - 1; i >= 0; i--)
+		{
+			if (newOptions.Converters[i] is EmptyStringToListConverterFactory)
+			{
+				newOptions.Converters.RemoveAt(i);
+				break;
+			}
+		}
+
 		JsonSerializer.Serialize(writer, value, newOptions);
 	}
 }

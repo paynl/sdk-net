@@ -17,7 +17,7 @@ public class CreateOrderRequest
 	public V3Optimize? Optimize { get; set; }
 
 	[JsonPropertyName("integration")]
-	public Integration? Integration { get; set; }
+	public V3OrderIntegration? Integration { get; set; }
 
 	[JsonPropertyName("customer")]
 	public V3Customer? Customer { get; set; }

@@ -29,6 +29,7 @@ public class Orders
 		Assert.NotNull(trx.Amount);
 		Assert.Equal(25000, trx.Amount.Value);
 		Assert.Equal(client.ServiceId, trx.ServiceId);
+		Assert.True(trx.Integration.TestMode);
 	}
 
 	[Fact]
@@ -118,16 +119,16 @@ public class Orders
 		var client = TestHelper.CreateClientV3();
 		var trx = await client.CreateOrder(new CreateOrderRequest
 		{
-			Integration = new Integration()
+			Integration = new V3OrderIntegration()
 			{
 				TestMode = true, // Test mode
 			},
 			PaymentMethod = new V3PaymentMethod()
 			{
-				Id = 1717, // Klarna
-				Input = new KlarnaInput()
+				Id = 10, // Ideal
+				Input = new IdealInput()
 				{
-					CountryCode = "nl"
+					IssuerId = ""
 				}
 			},
 			Amount = new Amount

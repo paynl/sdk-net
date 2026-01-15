@@ -6,13 +6,13 @@
         <LangVersion>11</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>PayNL.Sdk</PackageId>
-        <Version>3.3.6</Version>
+        <Version>3.3.7</Version>
         <Title>PayNL Sdk</Title>
         <Authors>Scenius</Authors>
         <Description>Pay.nl SDK for .NET</Description>
-        <Copyright>Copyright 2016-2025</Copyright>
+        <Copyright>Copyright 2016-2026</Copyright>
         <PackageTags>pay.nl payments pay paynl</PackageTags>
-        <PackageReleaseNotes>Change PAY. Base url</PackageReleaseNotes>
+        <PackageReleaseNotes>Modified testMode parameter on orders</PackageReleaseNotes>
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="System.Text.Json" Version="9.0.0" />
