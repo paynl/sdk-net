@@ -2,7 +2,7 @@
 
 With this SDK you will be able to start transactions and retrieve transactions with their status for the Pay.nl payment service provider.
 
-This SDK provides support for both the [PAY 2.0 (stable)](https://developer.pay.nl/v2.0/docs/introduction), and the [PAY 3.0 (beta)](https://developer.pay.nl/v3.0/docs/introduction), with each their own client class, `PayV2Client` and `PayV3Client`.
+This SDK provides support for both the [PAY 2.0](https://developer.pay.nl/v2.0/docs/introduction), and the [PAY 3.0](https://developer.pay.nl/v3.0/docs/introduction), with each their own client class, `PayV2Client` and `PayV3Client`.
 
 ---
 
