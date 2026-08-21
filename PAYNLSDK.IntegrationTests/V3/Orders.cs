@@ -136,24 +136,24 @@ public class Orders
 				Value = 25000, // Amount in cents
 			},
 			ReturnUrl = "https://demo.pay.nl/complete/",
-			Customer = new V3Customer() // Commented out details, as klarna validates these to be real, even in test mode
+			Customer = new V3Customer()
 			{
-				// Company = new V3Company()
-				// {
-				// 	Country = "NL",
-				// 	Name = "Test Company",
-				// 	CocNumber = "123456789",
-				// 	VatNumber = "NL85234567890",
-				// },
-				// Email = "test@example.com",
-				// Phone = "+31 6123456789",
-				// Gender = "M",
-				// Firstname = "John",
-				// Lastname = "Doe",
+				Company = new V3Company()
+				{
+					Country = "NL",
+					Name = "Test Company",
+					CocNumber = "123456789",
+					VatNumber = "NL85234567890",
+				},
+				Email = "test@example.com",
+				Phone = "+31 6123456789",
+				Gender = "M",
+				Firstname = "John",
+				Lastname = "Doe",
 				Locale = "nl_NL",
-				// DateOfBirth = DateTime.UtcNow.AddYears(-25),
-				// IpAddress = "127.0.0.1",
-				// Reference = "Reference"
+				DateOfBirth = DateTime.UtcNow.AddYears(-25),
+				IpAddress = "127.0.0.1",
+				Reference = "Reference"
 			},
 			Reference = "Reference",
 			Description = "Test Order",
@@ -184,28 +184,28 @@ public class Orders
 					}
 				},
 				CountryCode = "NL",
-				// DeliveryAddress = new V3CreateOrderAddress()
-				// {
-				// 	Street = "Test Street",
-				// 	ZipCode = "1234AB",
-				// 	Country = "NL",
-				// 	Region = "Noord-Holland",
-				// 	FirstName = "John",
-				// 	LastName = "Doe",
-				// 	StreetNumber = "4",
-				// 	StreetNumberExtension = "B"
-				// },
-				// InvoiceAddress = new V3CreateOrderAddress()
-				// {
-				// 	Street = "Test Street",
-				// 	ZipCode = "1234AB",
-				// 	Country = "NL",
-				// 	Region = "Noord-Holland",
-				// 	FirstName = "John",
-				// 	LastName = "Doe",
-				// 	StreetNumber = "4",
-				// 	StreetNumberExtension = "B"
-				// },
+				DeliveryAddress = new V3CreateOrderAddress()
+				{
+					Street = "Test Street",
+					ZipCode = "1234AB",
+					Country = "NL",
+					Region = "Noord-Holland",
+					FirstName = "John",
+					LastName = "Doe",
+					StreetNumber = "4",
+					StreetNumberExtension = "B"
+				},
+				InvoiceAddress = new V3CreateOrderAddress()
+				{
+					Street = "Test Street",
+					ZipCode = "1234AB",
+					Country = "NL",
+					Region = "Noord-Holland",
+					FirstName = "John",
+					LastName = "Doe",
+					StreetNumber = "4",
+					StreetNumberExtension = "B"
+				},
 				DeliveryDate = DateTime.UtcNow.AddDays(-19),
 				InvoiceDate = DateTime.UtcNow.AddDays(1),
 			},

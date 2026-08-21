@@ -6,13 +6,13 @@
         <LangVersion>11</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>PayNL.Sdk</PackageId>
-        <Version>3.3.8</Version>
+        <Version>3.4.1</Version>
         <Title>PayNL Sdk</Title>
         <Authors>Scenius</Authors>
         <Description>Pay.nl SDK for .NET</Description>
         <Copyright>Copyright 2016-2026</Copyright>
         <PackageTags>pay.nl payments pay paynl</PackageTags>
-        <PackageReleaseNotes>Modified testMode parameter on orders</PackageReleaseNotes>
+        <PackageReleaseNotes>Deprecated v2 transactions</PackageReleaseNotes>
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="System.Text.Json" Version="9.0.0" />

@@ -66,17 +66,20 @@ public class MultiCorePayV2Client : PayV2ClientBase
     /// Create a new transaction using the multi core system. (https://developer.pay.nl/docs/transaction-gateway-unit)
     /// </summary>
     /// <returns>Class containing information about the created transaction</returns>
+	[Obsolete("The V2 Transactions API is deprecated, please use PayNlSdk.Sdk.V3.Client.PayV3Client instead.")]
     public Task<CreateTransactionResponse?> CreateTransactionMultiCore(CreateTransactionRequest body) => _multiCoreRequester.ExecuteWithAutomaticCoreSwitching(() => _payV2Client.CreateTransaction(body, MultiCorePayV2Client.AvailableCores[ActiveEndpointIndex]));
 
     /// <summary>
     /// Retrieve new transaction using the multi core system. (https://developer.pay.nl/docs/transaction-gateway-unit)
     /// </summary>
     /// <returns>Class containing information about the transaction</returns>
+    [Obsolete("The V2 Transactions API is deprecated, please use PayNlSdk.Sdk.V3.Client.PayV3Client instead.")]
     public Task<GetTransactionResponse?> GetTransactionMultiCore(string transactionId) => _multiCoreRequester.ExecuteWithAutomaticCoreSwitching(() => _payV2Client.GetTransactionInfo(transactionId, MultiCorePayV2Client.AvailableCores[ActiveEndpointIndex]));
 
     /// <summary>
     /// Cancel a transaction using the multi core system. (https://developer.pay.nl/docs/transaction-gateway-unit)
     /// </summary>
     /// <returns>Class containing information about the cancelled transaction</returns>
+    [Obsolete("The V2 Transactions API is deprecated, please use PayNlSdk.Sdk.V3.Client.PayV3Client instead.")]
     public Task<CancelTransactionResponse?> CancelTransactionMultiCore(string transactionId) => _multiCoreRequester.ExecuteWithAutomaticCoreSwitching(() => _payV2Client.CancelTransaction(transactionId, MultiCorePayV2Client.AvailableCores[ActiveEndpointIndex]));
 }
